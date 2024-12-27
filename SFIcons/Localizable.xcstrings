@@ -2,10 +2,6 @@
   "sourceLanguage" : "en-CA",
   "strings" : {
     "Background Colour:" : {
-
-    },
-    "Base Colour:" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -28,13 +24,13 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Couleur d'arrière-plan:"
+            "value" : "Couleur d'arrière-plan"
           }
         },
         "fr-CA" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Couleur d'arrière-plan:"
+            "value" : "Couleur d'arrière-plan"
           }
         }
       }
