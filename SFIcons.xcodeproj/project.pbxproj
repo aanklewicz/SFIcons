@@ -14,6 +14,8 @@
 		6D891EDC2D15BFFC00A691DB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D891EDB2D15BFFC00A691DB /* UIKit.framework */; platformFilters = (ios, xros, ); };
 		6D891EDD2D15C04300A691DB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D891EDB2D15BFFC00A691DB /* UIKit.framework */; platformFilters = (ios, xros, ); };
 		6D891EDE2D15C04B00A691DB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D891EDB2D15BFFC00A691DB /* UIKit.framework */; platformFilters = (ios, xros, ); };
+		6D8DC6082D21A445004AFA14 /* ArgumentParser in Frameworks */ = {isa = PBXBuildFile; productRef = 6D8DC6072D21A445004AFA14 /* ArgumentParser */; };
+		6D8DC60A2D21AAA2004AFA14 /* sficons in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6D8DC5F82D21A0DC004AFA14 /* sficons */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,6 +35,28 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		6D8DC5F62D21A0DC004AFA14 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		6D8DC6092D21AA66004AFA14 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 12;
+			files = (
+				6D8DC60A2D21AAA2004AFA14 /* sficons in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		6D7170162D1F27320053548F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		6D7170182D1F27320053548F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -43,6 +67,7 @@
 		6D891EBD2D15BE2100A691DB /* SFIconsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SFIconsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D891EC72D15BE2100A691DB /* SFIconsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SFIconsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D891EDB2D15BFFC00A691DB /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.2.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		6D8DC5F82D21A0DC004AFA14 /* sficons */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = sficons; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -59,6 +84,11 @@
 		6D891ECA2D15BE2100A691DB /* SFIconsUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = SFIconsUITests;
+			sourceTree = "<group>";
+		};
+		6D8DC5F92D21A0DC004AFA14 /* SFIconsCLI */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = SFIconsCLI;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -85,6 +115,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				6D891EDE2D15C04B00A691DB /* UIKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6D8DC5F52D21A0DC004AFA14 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6D8DC6082D21A445004AFA14 /* ArgumentParser in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,6 +155,7 @@
 				6D891EAE2D15BE1F00A691DB /* SFIcons */,
 				6D891EC02D15BE2100A691DB /* SFIconsTests */,
 				6D891ECA2D15BE2100A691DB /* SFIconsUITests */,
+				6D8DC5F92D21A0DC004AFA14 /* SFIconsCLI */,
 				6D891EDA2D15BFFC00A691DB /* Frameworks */,
 				6D891EAD2D15BE1F00A691DB /* Products */,
 				6D71701C2D1F27320053548F /* SFIcons */,
@@ -129,6 +168,7 @@
 				6D891EAC2D15BE1F00A691DB /* SFIcons.app */,
 				6D891EBD2D15BE2100A691DB /* SFIconsTests.xctest */,
 				6D891EC72D15BE2100A691DB /* SFIconsUITests.xctest */,
+				6D8DC5F82D21A0DC004AFA14 /* sficons */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -151,6 +191,7 @@
 				6D891EA82D15BE1F00A691DB /* Sources */,
 				6D891EA92D15BE1F00A691DB /* Frameworks */,
 				6D891EAA2D15BE1F00A691DB /* Resources */,
+				6D8DC6092D21AA66004AFA14 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -212,6 +253,29 @@
 			productReference = 6D891EC72D15BE2100A691DB /* SFIconsUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		6D8DC5F72D21A0DC004AFA14 /* SFIconsCLI */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6D8DC5FC2D21A0DC004AFA14 /* Build configuration list for PBXNativeTarget "SFIconsCLI" */;
+			buildPhases = (
+				6D8DC5F42D21A0DC004AFA14 /* Sources */,
+				6D8DC5F52D21A0DC004AFA14 /* Frameworks */,
+				6D8DC5F62D21A0DC004AFA14 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				6D8DC5F92D21A0DC004AFA14 /* SFIconsCLI */,
+			);
+			name = SFIconsCLI;
+			packageProductDependencies = (
+				6D8DC6072D21A445004AFA14 /* ArgumentParser */,
+			);
+			productName = SFIconsCLI;
+			productReference = 6D8DC5F82D21A0DC004AFA14 /* sficons */;
+			productType = "com.apple.product-type.tool";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -234,6 +298,9 @@
 						CreatedOnToolsVersion = 16.2;
 						TestTargetID = 6D891EAB2D15BE1F00A691DB;
 					};
+					6D8DC5F72D21A0DC004AFA14 = {
+						CreatedOnToolsVersion = 16.2;
+					};
 				};
 			};
 			buildConfigurationList = 6D891EA72D15BE1F00A691DB /* Build configuration list for PBXProject "SFIcons" */;
@@ -250,6 +317,9 @@
 			);
 			mainGroup = 6D891EA32D15BE1F00A691DB;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				6D8DC6042D21A144004AFA14 /* XCRemoteSwiftPackageReference "swift-argument-parser" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 6D891EAD2D15BE1F00A691DB /* Products */;
 			projectDirPath = "";
@@ -258,6 +328,7 @@
 				6D891EAB2D15BE1F00A691DB /* SFIcons */,
 				6D891EBC2D15BE2100A691DB /* SFIconsTests */,
 				6D891EC62D15BE2100A691DB /* SFIconsUITests */,
+				6D8DC5F72D21A0DC004AFA14 /* SFIconsCLI */,
 			);
 		};
 /* End PBXProject section */
@@ -306,6 +377,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		6D891EC32D15BE2100A691DB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6D8DC5F42D21A0DC004AFA14 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -453,7 +531,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SFIcons/SFIcons.entitlements;
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_ASSET_PATHS = "\"SFIcons/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -495,7 +573,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SFIcons/SFIcons.entitlements;
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_ASSET_PATHS = "\"SFIcons/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -620,6 +698,36 @@
 			};
 			name = Release;
 		};
+		6D8DC5FD2D21A0DC004AFA14 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.neveradtofight.SFIconsCLI;
+				PRODUCT_NAME = sficons;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		6D8DC5FE2D21A0DC004AFA14 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.neveradtofight.SFIconsCLI;
+				PRODUCT_NAME = sficons;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -659,7 +767,35 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		6D8DC5FC2D21A0DC004AFA14 /* Build configuration list for PBXNativeTarget "SFIconsCLI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6D8DC5FD2D21A0DC004AFA14 /* Debug */,
+				6D8DC5FE2D21A0DC004AFA14 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		6D8DC6042D21A144004AFA14 /* XCRemoteSwiftPackageReference "swift-argument-parser" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-argument-parser.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.5.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6D8DC6072D21A445004AFA14 /* ArgumentParser */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6D8DC6042D21A144004AFA14 /* XCRemoteSwiftPackageReference "swift-argument-parser" */;
+			productName = ArgumentParser;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 6D891EA42D15BE1F00A691DB /* Project object */;
 }
