@@ -208,6 +208,12 @@
         }
       }
     },
+    "SFSymbol Size: %@%%" : {
+
+    },
+    "SFSymbol Size: %lf%%" : {
+
+    },
     "SFSymbol:" : {
       "localizations" : {
         "en-CA" : {

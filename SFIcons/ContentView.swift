@@ -15,6 +15,7 @@ struct ContentView: View {
     @State private var symbolColor: Color = .white
     @State private var sfSymbolName: String = "externaldrive.connected.to.line.below"
     @State private var iconSize: CGFloat = 512
+    @State private var sfsymbolSize: CGFloat = 50
     
 
     var body: some View {
@@ -30,7 +31,7 @@ struct ContentView: View {
                         .resizable()
                         .scaledToFit()
                         .foregroundColor(symbolColor)
-                        .frame(width: iconSize * 0.5, height: iconSize * 0.5)
+                        .frame(width: iconSize * sfsymbolSize / 100, height: iconSize * sfsymbolSize / 100)
                 }
 
                 HStack {
@@ -67,12 +68,19 @@ struct ContentView: View {
                         .font(.headline)
                     ColorPicker("Select Symbol Colour", selection: $symbolColor)
                 }
-
+                
                 // Base Colour Picker
                 VStack(alignment: .leading) {
                     Text("Background Colour:")
                         .font(.headline)
                     ColorPicker("Select Background Colour", selection: $backgroundColor)
+                }
+                
+                // SFSymbol Slider
+                VStack(alignment: .leading) {
+                    Text("SFSymbol Size: \(String(format: "%.0f", sfsymbolSize))%")
+                        .font(.headline)
+                    Slider(value: $sfsymbolSize, in: 1...100)
                 }
             }
             .padding()
