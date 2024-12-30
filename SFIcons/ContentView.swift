@@ -1,5 +1,6 @@
 import SwiftUI
 import UniformTypeIdentifiers
+import Cocoa
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
@@ -14,6 +15,7 @@ struct ContentView: View {
     @State private var symbolColor: Color = .white
     @State private var sfSymbolName: String = "externaldrive.connected.to.line.below"
     @State private var iconSize: CGFloat = 512
+    
 
     var body: some View {
         HStack {
@@ -173,11 +175,28 @@ struct ContentView: View {
     }
 }
 
+struct SFIconsCommands: Commands {
+    var body: some Commands {
+        CommandGroup(replacing: .newItem) {
+            Button("Install CLI Tool") {
+                // Create an instance of InstallCLITool and call its method
+                let installTool = InstallCLITool(title: "Install CLI Tool", action: nil, keyEquivalent: "")
+                installTool.installCLI()
+            }
+            .keyboardShortcut("i", modifiers: .command)
+        }
+    }
+}
+
 @main
+
 struct IconGeneratorApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+        }
+        .commands {
+            SFIconsCommands() // Add the custom commands
         }
     }
 }

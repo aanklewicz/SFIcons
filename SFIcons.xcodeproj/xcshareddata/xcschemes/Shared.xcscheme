@@ -25,7 +25,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "6D8DC5F72D21A0DC004AFA14"
-               BuildableName = "SFIconsCLI"
+               BuildableName = "sficons"
                BlueprintName = "SFIconsCLI"
                ReferencedContainer = "container:SFIcons.xcodeproj">
             </BuildableReference>
@@ -78,7 +78,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6D8DC5F72D21A0DC004AFA14"
-            BuildableName = "SFIconsCLI"
+            BuildableName = "sficons"
             BlueprintName = "SFIconsCLI"
             ReferencedContainer = "container:SFIcons.xcodeproj">
          </BuildableReference>
@@ -95,7 +95,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6D8DC5F72D21A0DC004AFA14"
-            BuildableName = "SFIconsCLI"
+            BuildableName = "sficons"
             BlueprintName = "SFIconsCLI"
             ReferencedContainer = "container:SFIcons.xcodeproj">
          </BuildableReference>
