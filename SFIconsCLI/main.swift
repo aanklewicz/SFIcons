@@ -16,6 +16,9 @@ struct SFIconsCLI: ParsableCommand {
 
     @Option(name: [.short, .long, .customLong("bgcolor")], help: "The background colour of the icon in HEX format (e.g., #1D75D2).")
     var bgcolour: String
+    
+    @Option(name: .shortAndLong, help: "The percentage size of the SF Symbol")
+    var percentforsymbol: Double
 
     @Option(name: .shortAndLong, help: "The output file path (e.g., ~/Desktop/icon.png).")
     var output: String
@@ -28,7 +31,7 @@ struct SFIconsCLI: ParsableCommand {
         }
 
         // Generate the icon
-        let image = generateSymbolImage(symbol: symbol, foregroundColor: foregroundColor, backgroundColor: backgroundColor)
+        let image = generateSymbolImage(symbol: symbol, foregroundColor: foregroundColor, backgroundColor: backgroundColor, percent: percentforsymbol)
         
         // Save the icon
         let outputPath = NSString(string: output).expandingTildeInPath
@@ -40,11 +43,12 @@ struct SFIconsCLI: ParsableCommand {
 }
 
 // Helper functions
-func generateSymbolImage(symbol: String, foregroundColor: NSColor, backgroundColor: NSColor) -> NSImage {
-    let size = NSSize(width: 256, height: 256)
+func generateSymbolImage(symbol: String, foregroundColor: NSColor, backgroundColor: NSColor, percent: Double) -> NSImage {
+    let totalSize: Double = 256
+    let size = NSSize(width: totalSize, height: totalSize)
     let cornerRadius: CGFloat = 64 // Adjust this for the desired corner radius
     
-    let config = NSImage.SymbolConfiguration(pointSize: 128, weight: .regular)
+    let config = NSImage.SymbolConfiguration(pointSize: (totalSize * percent / 100), weight: .regular)
         .applying(.init(paletteColors: [foregroundColor]))
     let image = NSImage(systemSymbolName: symbol, accessibilityDescription: nil)?
         .withSymbolConfiguration(config)
@@ -57,9 +61,30 @@ func generateSymbolImage(symbol: String, foregroundColor: NSColor, backgroundCol
     backgroundColor.setFill()
     roundedRect.fill()
     
-    // Draw the SF Symbol centered on the background
-    let symbolSize = NSSize(width: 128, height: 128)
-    let symbolOrigin = NSPoint(x: (size.width - symbolSize.width) / 2, y: (size.height - symbolSize.height) / 2)
+    // Calculate the proportional size of the symbol while maintaining its aspect ratio
+    let scale = totalSize * percent / 100
+    let symbolSize: NSSize
+    if let image = image {
+        let aspectRatio = image.size.width / image.size.height
+        if aspectRatio > 1 {
+            // Landscape: width is greater than height
+            symbolSize = NSSize(width: scale, height: scale / aspectRatio)
+        } else {
+            // Portrait or square: height is greater than or equal to width
+            symbolSize = NSSize(width: scale * aspectRatio, height: scale)
+        }
+    } else {
+        // Fallback to a square if the image is nil
+        symbolSize = NSSize(width: scale, height: scale)
+    }
+
+    // Center the symbol
+    let symbolOrigin = NSPoint(
+        x: (size.width - symbolSize.width) / 2,
+        y: (size.height - symbolSize.height) / 2
+    )
+
+    // Draw the image
     image?.draw(in: NSRect(origin: symbolOrigin, size: symbolSize))
     
     finalImage.unlockFocus()
