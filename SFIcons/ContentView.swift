@@ -11,11 +11,25 @@ struct ContentView_Previews: PreviewProvider {
 
 struct ContentView: View {
     // Properties
-    @State private var backgroundColor: Color = Color(red: 0.2745, green: 0.6157, blue: 0.8314)
-    @State private var symbolColor: Color = .white
-    @State private var sfSymbolName: String = "externaldrive.connected.to.line.below"
-    @State private var iconSize: CGFloat = 512
-    @State private var sfsymbolSize: CGFloat = 50
+   @State private var backgroundColor: Color = {
+        if let data = UserDefaults.standard.data(forKey: "backgroundColor"),
+           let color = try? NSKeyedUnarchiver.unarchivedObject(ofClass: NSColor.self, from: data) {
+            return Color(color)
+        }
+        return Color(red: 0.2745, green: 0.6157, blue: 0.8314)
+    }()
+    
+    @State private var symbolColor: Color = {
+        if let data = UserDefaults.standard.data(forKey: "symbolColor"),
+           let color = try? NSKeyedUnarchiver.unarchivedObject(ofClass: NSColor.self, from: data) {
+            return Color(color)
+        }
+        return .white
+    }()
+
+    @State private var sfSymbolName: String = UserDefaults.standard.string(forKey: "sfSymbolName") ?? "externaldrive.connected.to.line.below"
+    @State private var iconSize: CGFloat = CGFloat(UserDefaults.standard.float(forKey: "iconSize") == 0 ? 512 : UserDefaults.standard.float(forKey: "iconSize"))
+    @State private var sfsymbolSize: CGFloat = CGFloat(UserDefaults.standard.float(forKey: "sfsymbolSize") == 0 ? 50 : UserDefaults.standard.float(forKey: "sfsymbolSize"))
     
 
     var body: some View {
@@ -87,6 +101,9 @@ struct ContentView: View {
         }
         .frame(minWidth: 800, minHeight: 600)
         .padding()
+        .onDisappear {
+            saveState()
+        }
     }
 
     // Share Icon Function
@@ -167,6 +184,18 @@ struct ContentView: View {
             }
         }
     }
+
+    private func saveState() {
+        if let backgroundColorData = try? NSKeyedArchiver.archivedData(withRootObject: NSColor(backgroundColor), requiringSecureCoding: false) {
+            UserDefaults.standard.set(backgroundColorData, forKey: "backgroundColor")
+        }
+        if let symbolColorData = try? NSKeyedArchiver.archivedData(withRootObject: NSColor(symbolColor), requiringSecureCoding: false) {
+            UserDefaults.standard.set(symbolColorData, forKey: "symbolColor")
+        }
+        UserDefaults.standard.set(sfSymbolName, forKey: "sfSymbolName")
+        UserDefaults.standard.set(Float(iconSize), forKey: "iconSize")
+        UserDefaults.standard.set(Float(sfsymbolSize), forKey: "sfsymbolSize")
+    }
     
     var iconView: some View {
         ZStack {
@@ -183,19 +212,6 @@ struct ContentView: View {
     }
 }
 
-//struct SFIconsCommands: Commands {
-//    var body: some Commands {
-//        CommandGroup(replacing: .newItem) {
-//            Button("Install CLI Tool") {
-//                // Create an instance of InstallCLITool and call its method
-//                let installTool = InstallCLITool(title: "Install CLI Tool", action: nil, keyEquivalent: "")
-//                installTool.installCLI()
-//            }
-//            .keyboardShortcut("i", modifiers: .command)
-//        }
-//    }
-//}
-
 @main
 
 struct IconGeneratorApp: App {
@@ -203,8 +219,5 @@ struct IconGeneratorApp: App {
         WindowGroup {
             ContentView()
         }
-//        .commands {
-//            SFIconsCommands() // Add the custom commands
-//        }
     }
 }
