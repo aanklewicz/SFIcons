@@ -107,5 +107,23 @@
    <ArchiveAction
       buildConfiguration = "Release"
       revealArchiveInOrganizer = "YES">
+      <PostActions>
+         <ExecutionAction
+            ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
+            <ActionContent
+               title = "Run Script"
+               scriptText = "cd &quot;${PROJECT_DIR}&quot; ; agvtool bump&#10;">
+               <EnvironmentBuildable>
+                  <BuildableReference
+                     BuildableIdentifier = "primary"
+                     BlueprintIdentifier = "6D891EAB2D15BE1F00A691DB"
+                     BuildableName = "SFIcons.app"
+                     BlueprintName = "SFIcons"
+                     ReferencedContainer = "container:SFIcons.xcodeproj">
+                  </BuildableReference>
+               </EnvironmentBuildable>
+            </ActionContent>
+         </ExecutionAction>
+      </PostActions>
    </ArchiveAction>
 </Scheme>

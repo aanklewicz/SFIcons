@@ -183,18 +183,18 @@ struct ContentView: View {
     }
 }
 
-struct SFIconsCommands: Commands {
-    var body: some Commands {
-        CommandGroup(replacing: .newItem) {
-            Button("Install CLI Tool") {
-                // Create an instance of InstallCLITool and call its method
-                let installTool = InstallCLITool(title: "Install CLI Tool", action: nil, keyEquivalent: "")
-                installTool.installCLI()
-            }
-            .keyboardShortcut("i", modifiers: .command)
-        }
-    }
-}
+//struct SFIconsCommands: Commands {
+//    var body: some Commands {
+//        CommandGroup(replacing: .newItem) {
+//            Button("Install CLI Tool") {
+//                // Create an instance of InstallCLITool and call its method
+//                let installTool = InstallCLITool(title: "Install CLI Tool", action: nil, keyEquivalent: "")
+//                installTool.installCLI()
+//            }
+//            .keyboardShortcut("i", modifiers: .command)
+//        }
+//    }
+//}
 
 @main
 
@@ -203,8 +203,8 @@ struct IconGeneratorApp: App {
         WindowGroup {
             ContentView()
         }
-        .commands {
-            SFIconsCommands() // Add the custom commands
-        }
+//        .commands {
+//            SFIconsCommands() // Add the custom commands
+//        }
     }
 }
