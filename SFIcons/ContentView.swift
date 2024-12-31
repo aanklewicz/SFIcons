@@ -5,7 +5,7 @@ import Cocoa
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
-            .environment(\.locale, Locale(identifier: "en_CA"))
+            .environment(\.locale, Locale(identifier: "fr_CA"))
     }
 }
 
