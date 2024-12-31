@@ -9,9 +9,31 @@ struct ContentView_Previews: PreviewProvider {
     }
 }
 
+struct IconView: View {
+    var backgroundColor: Color
+    var sfSymbolName: String
+    var iconSize: CGFloat
+    var sfsymbolSize: CGFloat
+    var symbolColor: Color
+
+    var body: some View {
+        ZStack {
+            backgroundColor
+                .frame(width: iconSize, height: iconSize)
+                .cornerRadius(iconSize * 0.2) // Rounded corners
+
+            Image(systemName: sfSymbolName)
+                .resizable()
+                .scaledToFit()
+                .foregroundColor(symbolColor)
+                .frame(width: iconSize * sfsymbolSize / 100, height: iconSize * sfsymbolSize / 100)
+        }
+    }
+}
+
 struct ContentView: View {
     // Properties
-   @State private var backgroundColor: Color = {
+    @State private var backgroundColor: Color = {
         if let data = UserDefaults.standard.data(forKey: "backgroundColor"),
            let color = try? NSKeyedUnarchiver.unarchivedObject(ofClass: NSColor.self, from: data) {
             return Color(color)
@@ -36,17 +58,7 @@ struct ContentView: View {
         HStack {
             // Icon View
             VStack {
-                ZStack {
-                    backgroundColor
-                        .frame(width: iconSize, height: iconSize)
-                        .cornerRadius(iconSize * 0.2) // Rounded corners
-
-                    Image(systemName: sfSymbolName)
-                        .resizable()
-                        .scaledToFit()
-                        .foregroundColor(symbolColor)
-                        .frame(width: iconSize * sfsymbolSize / 100, height: iconSize * sfsymbolSize / 100)
-                }
+                IconView(backgroundColor: backgroundColor, sfSymbolName: sfSymbolName, iconSize: iconSize, sfsymbolSize: sfsymbolSize, symbolColor: symbolColor)
 
                 HStack {
                     // Share Button
@@ -198,17 +210,7 @@ struct ContentView: View {
     }
     
     var iconView: some View {
-        ZStack {
-            backgroundColor
-                .frame(width: iconSize, height: iconSize)
-                .cornerRadius(iconSize * 0.2)
-
-            Image(systemName: sfSymbolName)
-                .resizable()
-                .scaledToFit()
-                .foregroundColor(symbolColor)
-                .frame(width: iconSize * 0.5, height: iconSize * 0.5)
-        }
+        IconView(backgroundColor: backgroundColor, sfSymbolName: sfSymbolName, iconSize: iconSize, sfsymbolSize: sfsymbolSize, symbolColor: symbolColor)
     }
 }
 
