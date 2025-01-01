@@ -14,7 +14,7 @@ struct SFIconsCLI: ParsableCommand {
     @Option(name: [.short, .long, .customLong("color")], help: "The foreground colour of the symbol in HEX format (e.g., #FFFFFF).")
     var colour: String
 
-    @Option(name: [.short, .long, .customLong("bgcolor")], help: "The background colour of the icon in HEX format (e.g., #1D75D2).")
+    @Option(name: [.short, .long, .customLong("bgcolor")], help: "The background colour of the icon in HEX format (e.g., #469DD4).")
     var bgcolour: String
     
     @Option(name: .shortAndLong, help: "The percentage size of the SF Symbol")
@@ -44,8 +44,10 @@ struct SFIconsCLI: ParsableCommand {
 
 // Helper functions
 func generateSymbolImage(symbol: String, foregroundColor: NSColor, backgroundColor: NSColor, percent: Double) -> NSImage {
-    let totalSize: Double = 256
-    let size = NSSize(width: totalSize, height: totalSize)
+    let totalSize: Double = 416 // 512 - 2 * 48 (border size)
+    let borderSize: CGFloat = 48
+    let newSize = totalSize + 2 * Double(borderSize)
+    let size = NSSize(width: newSize, height: newSize)
     let cornerRadius: CGFloat = 64 // Adjust this for the desired corner radius
     
     let config = NSImage.SymbolConfiguration(pointSize: (totalSize * percent / 100), weight: .regular)
@@ -57,7 +59,7 @@ func generateSymbolImage(symbol: String, foregroundColor: NSColor, backgroundCol
     finalImage.lockFocus()
     
     // Draw the rounded square background
-    let roundedRect = NSBezierPath(roundedRect: NSRect(origin: .zero, size: size), xRadius: cornerRadius, yRadius: cornerRadius)
+    let roundedRect = NSBezierPath(roundedRect: NSRect(origin: NSPoint(x: borderSize, y: borderSize), size: NSSize(width: totalSize, height: totalSize)), xRadius: cornerRadius, yRadius: cornerRadius)
     backgroundColor.setFill()
     roundedRect.fill()
     
@@ -66,7 +68,7 @@ func generateSymbolImage(symbol: String, foregroundColor: NSColor, backgroundCol
     let symbolSize: NSSize
     if let image = image {
         let aspectRatio = image.size.width / image.size.height
-        if aspectRatio > 1 {
+        if (aspectRatio > 1) {
             // Landscape: width is greater than height
             symbolSize = NSSize(width: scale, height: scale / aspectRatio)
         } else {
@@ -78,10 +80,10 @@ func generateSymbolImage(symbol: String, foregroundColor: NSColor, backgroundCol
         symbolSize = NSSize(width: scale, height: scale)
     }
 
-    // Center the symbol
+    // Center the symbol within the original image area
     let symbolOrigin = NSPoint(
-        x: (size.width - symbolSize.width) / 2,
-        y: (size.height - symbolSize.height) / 2
+        x: borderSize + (totalSize - symbolSize.width) / 2,
+        y: borderSize + (totalSize - symbolSize.height) / 2
     )
 
     // Draw the image
