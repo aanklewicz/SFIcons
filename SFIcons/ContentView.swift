@@ -15,13 +15,14 @@ struct IconView: View {
     var iconSize: CGFloat
     var sfsymbolSize: CGFloat
     var symbolColor: Color
+    var paddingSize: CGFloat
 
     var body: some View {
         ZStack {
             backgroundColor
                 .frame(width: iconSize, height: iconSize)
                 .cornerRadius(iconSize * 0.2) // Rounded corners
-                .padding(48)
+                .padding(paddingSize)
                 .background(Color.clear)
 
             Image(systemName: sfSymbolName)
@@ -53,14 +54,18 @@ struct ContentView: View {
 
     @State private var sfSymbolName: String = UserDefaults.standard.string(forKey: "sfSymbolName") ?? "externaldrive.connected.to.line.below"
     @State private var iconSize: CGFloat = CGFloat(UserDefaults.standard.float(forKey: "iconSize") == 0 ? 512 : UserDefaults.standard.float(forKey: "iconSize"))
-    @State private var sfsymbolSize: CGFloat = CGFloat(UserDefaults.standard.float(forKey: "sfsymbolSize") == 0 ? 50 : UserDefaults.standard.float(forKey: "sfsymbolSize"))
+    @State private var sfsymbolSize: CGFloat = CGFloat(UserDefaults.standard.float(forKey: "sfsymbolSize") == 0 ? 75 : UserDefaults.standard.float(forKey: "sfsymbolSize"))
     
+    private var paddingSize: CGFloat {
+        return 48 * 512 / iconSize
+    }
+
 
     var body: some View {
         HStack {
             // Icon View
             VStack {
-                IconView(backgroundColor: backgroundColor, sfSymbolName: sfSymbolName, iconSize: iconSize, sfsymbolSize: sfsymbolSize, symbolColor: symbolColor)
+                IconView(backgroundColor: backgroundColor, sfSymbolName: sfSymbolName, iconSize: iconSize, sfsymbolSize: sfsymbolSize, symbolColor: symbolColor, paddingSize: paddingSize)
 
                 HStack {
                     // Share Button
@@ -212,7 +217,7 @@ struct ContentView: View {
     }
     
     var iconView: some View {
-        IconView(backgroundColor: backgroundColor, sfSymbolName: sfSymbolName, iconSize: iconSize, sfsymbolSize: sfsymbolSize, symbolColor: symbolColor)
+        IconView(backgroundColor: backgroundColor, sfSymbolName: sfSymbolName, iconSize: iconSize, sfsymbolSize: sfsymbolSize, symbolColor: symbolColor, paddingSize: paddingSize)
     }
 }
 
