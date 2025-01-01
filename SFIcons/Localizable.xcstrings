@@ -9,6 +9,12 @@
             "value" : "Background Color:"
           }
         },
+        "en-AU" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Background Colour:"
+          }
+        },
         "en-CA" : {
           "stringUnit" : {
             "state" : "translated",
@@ -43,6 +49,12 @@
             "value" : "Enter SF Symbol Name"
           }
         },
+        "en-AU" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter SFSymbol Name"
+          }
+        },
         "en-CA" : {
           "stringUnit" : {
             "state" : "translated",
@@ -72,6 +84,12 @@
     "Export" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Export"
+          }
+        },
+        "en-AU" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Export"
@@ -111,6 +129,12 @@
             "value" : "Select Background Color"
           }
         },
+        "en-AU" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select Background Colour"
+          }
+        },
         "en-CA" : {
           "stringUnit" : {
             "state" : "translated",
@@ -143,6 +167,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Select Symbol Color"
+          }
+        },
+        "en-AU" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select Symbol Colour"
           }
         },
         "en-CA" : {
@@ -179,6 +209,12 @@
             "value" : "SF Symbol Color"
           }
         },
+        "en-AU" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SF Symbol Colour"
+          }
+        },
         "en-CA" : {
           "stringUnit" : {
             "state" : "translated",
@@ -206,10 +242,73 @@
       }
     },
     "SFSymbol Size: %@%%" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SFSymbol Size: %@%%"
+          }
+        },
+        "en-AU" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SFSymbol Size: %@%%"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SFSymbol Size: %@%%"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dimensions du SFSymbol: %@%%"
+          }
+        },
+        "fr-CA" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dimensions du SFSymbol: %@%%"
+          }
+        }
+      }
     },
     "SFSymbol Size: %lf%%" : {
-
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SFSymbol Size: %lf%%"
+          }
+        },
+        "en-AU" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SFSymbol Size: %lf%%"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SFSymbol Size: %lf%%"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dimensions du SFSymbol: %lf%%"
+          }
+        },
+        "fr-CA" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dimensions du SFSymbol: %lf%%"
+          }
+        }
+      }
     },
     "SFSymbol:" : {
       "localizations" : {
@@ -226,6 +325,12 @@
       "comment" : "Share button label",
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Share"
+          }
+        },
+        "en-AU" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Share"
