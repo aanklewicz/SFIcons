@@ -276,6 +276,7 @@
       }
     },
     "SFSymbol Size: %lf%%" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {

@@ -21,6 +21,8 @@ struct IconView: View {
             backgroundColor
                 .frame(width: iconSize, height: iconSize)
                 .cornerRadius(iconSize * 0.2) // Rounded corners
+                .padding(48)
+                .background(Color.clear)
 
             Image(systemName: sfSymbolName)
                 .resizable()
