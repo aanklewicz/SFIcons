@@ -1,6 +1,6 @@
 # SFIcons
 
-![Screenshot of UI](https://www.neverhadtofight.com/wp-content/uploads/2024/12/Screenshot-2024-12-20-at-11.23.23%E2%80%AFAM.png)
+![Screenshot of UI](https://www.neverhadtofight.com/wp-content/uploads/2024/12/Screenshot-2025-01-06-at-4.17.55%E2%80%AFPM.png)
 
 An app to build images in the style of macOS icons. Perfect for your self-service system's catalogue (or at least perfect for mine).
 
