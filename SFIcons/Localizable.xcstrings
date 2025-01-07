@@ -275,41 +275,6 @@
         }
       }
     },
-    "SFSymbol Size: %lf%%" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SFSymbol Size: %lf%%"
-          }
-        },
-        "en-AU" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SFSymbol Size: %lf%%"
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SFSymbol Size: %lf%%"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Dimensions du SFSymbol: %lf%%"
-          }
-        },
-        "fr-CA" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Dimensions du SFSymbol: %lf%%"
-          }
-        }
-      }
-    },
     "SFSymbol:" : {
       "localizations" : {
         "en-CA" : {

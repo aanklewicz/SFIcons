@@ -5,7 +5,7 @@ import Cocoa
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
-            .environment(\.locale, Locale(identifier: "fr_CA"))
+            .environment(\.locale, Locale(identifier: "en_CA"))
     }
 }
 
@@ -72,16 +72,14 @@ struct ContentView: View {
 
                 // SFSymbol Colour Picker
                 VStack(alignment: .leading) {
-                    Text("SFSymbol Colour:")
+                   ColorPicker("Select Symbol Colour", selection: $symbolColor)
                         .font(.headline)
-                    ColorPicker("Select Symbol Colour", selection: $symbolColor)
                 }
                 
                 // Base Colour Picker
                 VStack(alignment: .leading) {
-                    Text("Background Colour:")
-                        .font(.headline)
                     ColorPicker("Select Background Colour", selection: $backgroundColor)
+                        .font(.headline)
                 }
                 
                 // SFSymbol Slider
