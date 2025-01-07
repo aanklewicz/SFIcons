@@ -5,6 +5,7 @@ import AppKit
 // Define the CLI structure
 struct SFIconsCLI: ParsableCommand {
     static var configuration = CommandConfiguration(
+        commandName: "sficons",
         abstract: "Generate SF Symbols with custom colors and export them as PNG files."
     )
 
