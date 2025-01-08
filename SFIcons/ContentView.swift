@@ -16,7 +16,7 @@ struct ContentView: View {
            let color = try? NSKeyedUnarchiver.unarchivedObject(ofClass: NSColor.self, from: data) {
             return Color(color)
         }
-        return Color(red: 0.2745, green: 0.6157, blue: 0.8314)
+        return Color(red: 0.0196, green: 0.2667, blue: 0.3686)
     }()
     
     @State private var symbolColor: Color = {
@@ -28,8 +28,25 @@ struct ContentView: View {
     }()
 
     @State private var sfSymbolName: String = UserDefaults.standard.string(forKey: "sfSymbolName") ?? "externaldrive.connected.to.line.below"
+    @State private var overlay: String = UserDefaults.standard.string(forKey: "overlay") ?? ""
     @State private var iconSize: CGFloat = CGFloat(UserDefaults.standard.float(forKey: "iconSize") == 0 ? 512 : UserDefaults.standard.float(forKey: "iconSize"))
     @State private var sfsymbolSize: CGFloat = CGFloat(UserDefaults.standard.float(forKey: "sfsymbolSize") == 0 ? 75 : UserDefaults.standard.float(forKey: "sfsymbolSize"))
+    
+    @State private var overlayColor: Color = {
+        if let data = UserDefaults.standard.data(forKey: "overlayColor"),
+           let color = try? NSKeyedUnarchiver.unarchivedObject(ofClass: NSColor.self, from: data) {
+            return Color(color)
+        }
+        return Color(red: 0.8314, green: 0.9451, blue: 0.9569)
+    }()
+    
+    @State private var overlayBgColor: Color = {
+        if let data = UserDefaults.standard.data(forKey: "overlayBgColor"),
+           let color = try? NSKeyedUnarchiver.unarchivedObject(ofClass: NSColor.self, from: data) {
+            return Color(color)
+        }
+        return Color(red: 0.0941, green: 0.6039, blue: 0.7059)
+    }()
     
     private var paddingSize: CGFloat {
         return 48 * 512 / iconSize
@@ -40,7 +57,7 @@ struct ContentView: View {
         HStack {
             // Icon View
             VStack {
-                IconView(backgroundColor: backgroundColor, sfSymbolName: sfSymbolName, iconSize: iconSize, sfsymbolSize: sfsymbolSize, symbolColor: symbolColor, paddingSize: paddingSize)
+                IconView(backgroundColor: backgroundColor, sfSymbolName: sfSymbolName, iconSize: iconSize, sfsymbolSize: sfsymbolSize, symbolColor: symbolColor, paddingSize: paddingSize, overlay: overlay, overlayColor: overlayColor, overlayBgColor: overlayBgColor)
 
                 HStack {
                     // Share Button
@@ -61,10 +78,8 @@ struct ContentView: View {
 
             // Options Panel
             VStack(alignment: .leading, spacing: 20) {
-                // Overlay SFSymbol
+                // SFSymbol
                 VStack(alignment: .leading) {
-                    Text("SFSymbol:")
-                        .font(.headline)
                     TextField("Enter SFSymbol Name", text: $sfSymbolName)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .frame(width: 200)
@@ -88,6 +103,30 @@ struct ContentView: View {
                         .font(.headline)
                     Slider(value: $sfsymbolSize, in: 1...100)
                 }
+                
+                // Overlay Disclosure Group
+                DisclosureGroup("Add an overlay") {
+                    VStack(alignment: .leading) {
+                        VStack(alignment: .leading) {
+                            TextField("Overlay", text: $overlay)
+                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                                .frame(width: 200)
+                        }
+                        
+                        // Overlay Colour Picker
+                        VStack(alignment: .leading) {
+                            ColorPicker("Overlay Colour", selection: $overlayColor)
+                                .font(.headline)
+                        }
+                        
+                        // Overlay Background Colour Picker
+                        VStack(alignment: .leading) {
+                            ColorPicker("Overlay Background Colour", selection: $overlayBgColor)
+                                .font(.headline)
+                        }
+                    }
+                }
+                .font(.headline)
             }
             .padding()
         }
@@ -190,7 +229,7 @@ struct ContentView: View {
     }
     
     var iconView: some View {
-        IconView(backgroundColor: backgroundColor, sfSymbolName: sfSymbolName, iconSize: iconSize, sfsymbolSize: sfsymbolSize, symbolColor: symbolColor, paddingSize: paddingSize)
+        IconView(backgroundColor: backgroundColor, sfSymbolName: sfSymbolName, iconSize: iconSize, sfsymbolSize: sfsymbolSize, symbolColor: symbolColor, paddingSize: paddingSize, overlay: overlay, overlayColor: overlayColor, overlayBgColor: overlayBgColor)
     }
 }
 
