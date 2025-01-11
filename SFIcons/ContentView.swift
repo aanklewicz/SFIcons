@@ -31,9 +31,8 @@ struct ContentView: View {
     @State private var overlay: String = UserDefaults.standard.string(forKey: "overlay") ?? ""
     @State private var iconSize: CGFloat = CGFloat(UserDefaults.standard.float(forKey: "iconSize") == 0 ? 512 : UserDefaults.standard.float(forKey: "iconSize"))
     @State private var sfsymbolSize: CGFloat = CGFloat(UserDefaults.standard.float(forKey: "sfsymbolSize") == 0 ? 75 : UserDefaults.standard.float(forKey: "sfsymbolSize"))
-    // Needs to save state per session
-    @State private var dropShadow: Bool = true
-    @State private var backgroundGradient: Bool = true
+    @State private var dropShadow: Bool = UserDefaults.standard.object(forKey: "dropShadow") as? Bool ?? true
+    @State private var backgroundGradient: Bool = UserDefaults.standard.object(forKey: "backgroundGradient") as? Bool ?? true
     
     @State private var overlayColor: Color = {
         if let data = UserDefaults.standard.data(forKey: "overlayColor"),
@@ -240,6 +239,8 @@ struct ContentView: View {
         UserDefaults.standard.set(sfSymbolName, forKey: "sfSymbolName")
         UserDefaults.standard.set(Float(iconSize), forKey: "iconSize")
         UserDefaults.standard.set(Float(sfsymbolSize), forKey: "sfsymbolSize")
+        UserDefaults.standard.set(dropShadow, forKey: "dropShadow")
+        UserDefaults.standard.set(backgroundGradient, forKey: "backgroundGradient")
     }
     
     var iconView: some View {
