@@ -2,45 +2,89 @@
   "sourceLanguage" : "en-CA",
   "strings" : {
     "Add an overlay" : {
-
-    },
-    "Background Colour:" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Background Color:"
+            "value" : "Add an overlay"
           }
         },
         "en-AU" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Background Colour:"
-          }
-        },
-        "en-CA" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Background Colour:"
+            "value" : "Add an overlay"
           }
         },
         "en-GB" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Background Colour:"
+            "value" : "Add an overlay"
           }
-        },
-        "fr" : {
+        }
+      }
+    },
+    "Advanced" : {
+      "localizations" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Couleur d'arrière-plan"
+            "value" : "Advanced"
           }
         },
-        "fr-CA" : {
+        "en-AU" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Couleur d'arrière-plan"
+            "value" : "Advanced"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Advanced"
+          }
+        }
+      }
+    },
+    "Background Gradient" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Background Gradient"
+          }
+        },
+        "en-AU" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Background Gradient"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Background Gradient"
+          }
+        }
+      }
+    },
+    "Drop Shadow" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Drop Shadow"
+          }
+        },
+        "en-AU" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Drop Shadow"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Drop Shadow"
           }
         }
       }
@@ -126,13 +170,70 @@
       }
     },
     "Overlay" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Overlay"
+          }
+        },
+        "en-AU" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Overlay"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Overlay"
+          }
+        }
+      }
     },
     "Overlay Background Colour" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Overlay Background Color"
+          }
+        },
+        "en-AU" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Overlay Background Colour"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Overlay Background Colour"
+          }
+        }
+      }
     },
     "Overlay Colour" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Overlay Color"
+          }
+        },
+        "en-AU" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Overlay Colour"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Overlay Colour"
+          }
+        }
+      }
     },
     "Select Background Colour" : {
       "localizations" : {
@@ -214,47 +315,6 @@
         }
       }
     },
-    "SFSymbol Colour:" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SF Symbol Color"
-          }
-        },
-        "en-AU" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SF Symbol Colour"
-          }
-        },
-        "en-CA" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SF Symbol Colour"
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SF Symbol Colour"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Couleur du SFSymbol"
-          }
-        },
-        "fr-CA" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Couleur du SFSymbol"
-          }
-        }
-      }
-    },
     "SFSymbol Size: %@%%" : {
       "localizations" : {
         "en" : {
@@ -288,18 +348,6 @@
           }
         }
       }
-    },
-    "SFSymbol:" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en-CA" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SFSymbol:"
-          }
-        }
-      },
-      "shouldTranslate" : false
     },
     "Share" : {
       "comment" : "Share button label",

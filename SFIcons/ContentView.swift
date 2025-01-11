@@ -31,6 +31,9 @@ struct ContentView: View {
     @State private var overlay: String = UserDefaults.standard.string(forKey: "overlay") ?? ""
     @State private var iconSize: CGFloat = CGFloat(UserDefaults.standard.float(forKey: "iconSize") == 0 ? 512 : UserDefaults.standard.float(forKey: "iconSize"))
     @State private var sfsymbolSize: CGFloat = CGFloat(UserDefaults.standard.float(forKey: "sfsymbolSize") == 0 ? 75 : UserDefaults.standard.float(forKey: "sfsymbolSize"))
+    // Needs to save state per session
+    @State private var dropShadow: Bool = true
+    @State private var backgroundGradient: Bool = true
     
     @State private var overlayColor: Color = {
         if let data = UserDefaults.standard.data(forKey: "overlayColor"),
@@ -57,7 +60,18 @@ struct ContentView: View {
         HStack {
             // Icon View
             VStack {
-                IconView(backgroundColor: backgroundColor, sfSymbolName: sfSymbolName, iconSize: iconSize, sfsymbolSize: sfsymbolSize, symbolColor: symbolColor, paddingSize: paddingSize, overlay: overlay, overlayColor: overlayColor, overlayBgColor: overlayBgColor)
+                IconView(backgroundColor: backgroundColor,
+                         sfSymbolName: sfSymbolName,
+                         iconSize: iconSize,
+                         sfsymbolSize: sfsymbolSize,
+                         symbolColor: symbolColor,
+                         paddingSize: paddingSize,
+                         overlay: overlay,
+                         overlayColor: overlayColor,
+                         overlayBgColor: overlayBgColor,
+                         dropShadow: dropShadow,
+                         backgroundGradient: backgroundGradient)
+
 
                 HStack {
                     // Share Button
@@ -77,53 +91,51 @@ struct ContentView: View {
             .padding()
 
             // Options Panel
-            VStack(alignment: .leading, spacing: 20) {
+            VStack(alignment: .leading) {
                 // SFSymbol
-                VStack(alignment: .leading) {
-                    TextField("Enter SFSymbol Name", text: $sfSymbolName)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .frame(width: 200)
-                }
+                TextField("Enter SFSymbol Name", text: $sfSymbolName)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .frame(width: 200)
 
                 // SFSymbol Colour Picker
-                VStack(alignment: .leading) {
-                   ColorPicker("Select Symbol Colour", selection: $symbolColor)
-                        .font(.headline)
-                }
+               ColorPicker("Select Symbol Colour", selection: $symbolColor)
+                    .font(.headline)
                 
                 // Base Colour Picker
-                VStack(alignment: .leading) {
-                    ColorPicker("Select Background Colour", selection: $backgroundColor)
-                        .font(.headline)
-                }
+                ColorPicker("Select Background Colour", selection: $backgroundColor)
+                    .font(.headline)
                 
                 // SFSymbol Slider
-                VStack(alignment: .leading) {
-                    Text("SFSymbol Size: \(String(format: "%.0f", sfsymbolSize))%")
-                        .font(.headline)
-                    Slider(value: $sfsymbolSize, in: 1...100)
-                }
+                Text("SFSymbol Size: \(String(format: "%.0f", sfsymbolSize))%")
+                    .font(.headline)
+                Slider(value: $sfsymbolSize, in: 1...100)
                 
                 // Overlay Disclosure Group
                 DisclosureGroup("Add an overlay") {
                     VStack(alignment: .leading) {
-                        VStack(alignment: .leading) {
-                            TextField("Overlay", text: $overlay)
-                                .textFieldStyle(RoundedBorderTextFieldStyle())
-                                .frame(width: 200)
-                        }
+                        // Overlay SF Symbol
+                        TextField("Overlay", text: $overlay)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .frame(width: 200)
                         
                         // Overlay Colour Picker
-                        VStack(alignment: .leading) {
-                            ColorPicker("Overlay Colour", selection: $overlayColor)
-                                .font(.headline)
-                        }
+                        ColorPicker("Overlay Colour", selection: $overlayColor)
+                            .font(.headline)
                         
                         // Overlay Background Colour Picker
-                        VStack(alignment: .leading) {
-                            ColorPicker("Overlay Background Colour", selection: $overlayBgColor)
-                                .font(.headline)
-                        }
+                        ColorPicker("Overlay Background Colour", selection: $overlayBgColor)
+                            .font(.headline)
+                    }
+                }
+                .font(.headline)
+                
+                // Advanced Disclosure Group
+                DisclosureGroup("Advanced") {
+                    VStack(alignment: .leading) {
+                        Toggle("Drop Shadow", isOn: $dropShadow)
+                            .font(.headline)
+                        Toggle("Background Gradient", isOn: $backgroundGradient)
+                            .font(.headline)
                     }
                 }
                 .font(.headline)
@@ -229,7 +241,17 @@ struct ContentView: View {
     }
     
     var iconView: some View {
-        IconView(backgroundColor: backgroundColor, sfSymbolName: sfSymbolName, iconSize: iconSize, sfsymbolSize: sfsymbolSize, symbolColor: symbolColor, paddingSize: paddingSize, overlay: overlay, overlayColor: overlayColor, overlayBgColor: overlayBgColor)
+        IconView(backgroundColor: backgroundColor,
+                 sfSymbolName: sfSymbolName,
+                 iconSize: iconSize,
+                 sfsymbolSize: sfsymbolSize,
+                 symbolColor: symbolColor,
+                 paddingSize: paddingSize,
+                 overlay: overlay,
+                 overlayColor: overlayColor,
+                 overlayBgColor: overlayBgColor,
+                 dropShadow: dropShadow,
+                 backgroundGradient: backgroundGradient)
     }
 }
 
