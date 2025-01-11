@@ -113,19 +113,18 @@ struct ContentView: View {
                 // Overlay Disclosure Group
                 DisclosureGroup("Add an overlay") {
                     VStack(alignment: .leading) {
-                        // Overlay SF Symbol
                         TextField("Overlay", text: $overlay)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                             .frame(width: 200)
                         
-                        // Overlay Colour Picker
                         ColorPicker("Overlay Colour", selection: $overlayColor)
                             .font(.headline)
                         
-                        // Overlay Background Colour Picker
                         ColorPicker("Overlay Background Colour", selection: $overlayBgColor)
                             .font(.headline)
                     }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding([.leading], 15)
                 }
                 .font(.headline)
                 
@@ -134,9 +133,12 @@ struct ContentView: View {
                     VStack(alignment: .leading) {
                         Toggle("Drop Shadow", isOn: $dropShadow)
                             .font(.headline)
+                        
                         Toggle("Background Gradient", isOn: $backgroundGradient)
                             .font(.headline)
                     }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding([.leading], 15)
                 }
                 .font(.headline)
             }
