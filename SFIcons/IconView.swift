@@ -23,7 +23,17 @@ struct IconView: View {
                     var bri: CGFloat = 0
                     var alpha: CGFloat = 0
                     nsColor.usingColorSpace(.deviceRGB)?.getHue(&hue, saturation: &sat, brightness: &bri, alpha: &alpha)
-                    return Color(hue: hue, saturation: 0.8, brightness: bri, opacity: alpha) // Apple appears to being using 80% saturation for their icon gradients
+                    return Color(hue: hue, saturation: 0.8, brightness: bri, opacity: alpha)
+                }()
+        
+        let saturatedOverlayColor: Color = {
+                    let nsColor = NSColor(overlayBgColor)
+                    var hue: CGFloat = 0
+                    var sat: CGFloat = 0
+                    var bri: CGFloat = 0
+                    var alpha: CGFloat = 0
+                    nsColor.usingColorSpace(.deviceRGB)?.getHue(&hue, saturation: &sat, brightness: &bri, alpha: &alpha)
+                    return Color(hue: hue, saturation: 0.8, brightness: bri, opacity: alpha)
                 }()
         
         ZStack {
@@ -33,8 +43,6 @@ struct IconView: View {
                 .padding(paddingSize)
                 .background(Color.clear)
                 .shadow(radius: dropShadow ? 5 : 0, x: 0, y: dropShadow ? 5 : 0)
-
-                
 
             Image(systemName: sfSymbolName)
                 .resizable()
@@ -47,10 +55,11 @@ struct IconView: View {
             Group {
                 if !overlay.isEmpty {
                     ZStack {
-                        overlayBgColor
+                        LinearGradient(gradient: Gradient(colors: overlayBackgroundGradient ? [overlayBgColor, saturatedOverlayColor] : [overlayBgColor, overlayBgColor]), startPoint: .bottom, endPoint: .top)
                             .frame(width: iconSize / 4, height: iconSize / 4)
                             .cornerRadius(iconSize / 8 * 0.2)
-                            .shadow(radius: 4, x: 2, y: 2)
+                            .shadow(radius: overlayDropShadow ? 5 : 0, x: 0, y: overlayDropShadow ? 5 : 0)
+                        
                         Image(systemName: overlay)
                             .resizable()
                             .scaledToFit()

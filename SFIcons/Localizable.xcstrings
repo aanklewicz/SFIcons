@@ -191,6 +191,9 @@
         }
       }
     },
+    "Overlay Advanced" : {
+
+    },
     "Overlay Background Colour" : {
       "localizations" : {
         "en" : {
@@ -213,6 +216,9 @@
         }
       }
     },
+    "Overlay Background Gradient" : {
+
+    },
     "Overlay Colour" : {
       "localizations" : {
         "en" : {
@@ -234,6 +240,9 @@
           }
         }
       }
+    },
+    "Overlay Drop Shadow" : {
+
     },
     "Select Background Colour" : {
       "localizations" : {

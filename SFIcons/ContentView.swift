@@ -134,6 +134,19 @@ struct ContentView: View {
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding([.leading], 15)
+                    
+                    // Advanced items for Overlay
+                    DisclosureGroup("Overlay Advanced") {
+                        VStack(alignment: .leading) {
+                            Toggle("Overlay Drop Shadow", isOn: $overlayDropShadow)
+                                .font(.headline)
+                            
+                            Toggle("Overlay Background Gradient", isOn: $overlayBackgroundGradient)
+                                .font(.headline)
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding([.leading], 15)
+                    }
                 }
                 .font(.headline)
                 
