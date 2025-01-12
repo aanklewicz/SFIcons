@@ -12,6 +12,8 @@ struct IconView: View {
     var overlayBgColor: Color
     var dropShadow: Bool = true
     var backgroundGradient: Bool = true
+    var overlayDropShadow: Bool = true
+    var overlayBackgroundGradient: Bool = true
 
     var body: some View {
         let saturatedColor: Color = {

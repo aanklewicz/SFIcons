@@ -2,6 +2,7 @@ import SwiftUI
 import UniformTypeIdentifiers
 import Cocoa
 
+// To preview in other languages, edit the identifier
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
@@ -10,7 +11,9 @@ struct ContentView_Previews: PreviewProvider {
 }
 
 struct ContentView: View {
-    // Properties
+    // Setting up the variables
+    
+    // Variables for primary items
     @State private var backgroundColor: Color = {
         if let data = UserDefaults.standard.data(forKey: "backgroundColor"),
            let color = try? NSKeyedUnarchiver.unarchivedObject(ofClass: NSColor.self, from: data) {
@@ -28,12 +31,15 @@ struct ContentView: View {
     }()
 
     @State private var sfSymbolName: String = UserDefaults.standard.string(forKey: "sfSymbolName") ?? "externaldrive.connected.to.line.below"
-    @State private var overlay: String = UserDefaults.standard.string(forKey: "overlay") ?? ""
     @State private var iconSize: CGFloat = CGFloat(UserDefaults.standard.float(forKey: "iconSize") == 0 ? 512 : UserDefaults.standard.float(forKey: "iconSize"))
-    @State private var sfsymbolSize: CGFloat = CGFloat(UserDefaults.standard.float(forKey: "sfsymbolSize") == 0 ? 75 : UserDefaults.standard.float(forKey: "sfsymbolSize"))
+    
+    // Variables for Advanced Settings
     @State private var dropShadow: Bool = UserDefaults.standard.object(forKey: "dropShadow") as? Bool ?? true
     @State private var backgroundGradient: Bool = UserDefaults.standard.object(forKey: "backgroundGradient") as? Bool ?? true
     
+    // Variables for Overlay
+    @State private var overlay: String = UserDefaults.standard.string(forKey: "overlay") ?? ""
+    @State private var sfsymbolSize: CGFloat = CGFloat(UserDefaults.standard.float(forKey: "sfsymbolSize") == 0 ? 75 : UserDefaults.standard.float(forKey: "sfsymbolSize"))
     @State private var overlayColor: Color = {
         if let data = UserDefaults.standard.data(forKey: "overlayColor"),
            let color = try? NSKeyedUnarchiver.unarchivedObject(ofClass: NSColor.self, from: data) {
@@ -41,7 +47,6 @@ struct ContentView: View {
         }
         return Color(red: 0.8314, green: 0.9451, blue: 0.9569)
     }()
-    
     @State private var overlayBgColor: Color = {
         if let data = UserDefaults.standard.data(forKey: "overlayBgColor"),
            let color = try? NSKeyedUnarchiver.unarchivedObject(ofClass: NSColor.self, from: data) {
@@ -49,7 +54,10 @@ struct ContentView: View {
         }
         return Color(red: 0.0941, green: 0.6039, blue: 0.7059)
     }()
+    @State private var overlayDropShadow: Bool = UserDefaults.standard.object(forKey: "dropShadow") as? Bool ?? true
+    @State private var overlayBackgroundGradient: Bool = UserDefaults.standard.object(forKey: "backgroundGradient") as? Bool ?? true
     
+    // Padding Size variable
     private var paddingSize: CGFloat {
         return 48 * 512 / iconSize
     }
@@ -69,7 +77,9 @@ struct ContentView: View {
                          overlayColor: overlayColor,
                          overlayBgColor: overlayBgColor,
                          dropShadow: dropShadow,
-                         backgroundGradient: backgroundGradient)
+                         backgroundGradient: backgroundGradient,
+                         overlayDropShadow: overlayDropShadow,
+                         overlayBackgroundGradient: overlayBackgroundGradient)
 
 
                 HStack {
@@ -241,6 +251,15 @@ struct ContentView: View {
         UserDefaults.standard.set(Float(sfsymbolSize), forKey: "sfsymbolSize")
         UserDefaults.standard.set(dropShadow, forKey: "dropShadow")
         UserDefaults.standard.set(backgroundGradient, forKey: "backgroundGradient")
+        UserDefaults.standard.set(overlayDropShadow, forKey: "overlayDropShadow")
+        UserDefaults.standard.set(overlayBackgroundGradient, forKey: "overlayBackgroundGradient")
+        UserDefaults.standard.set(overlay, forKey: "overlay")
+        if let overlayColorData = try? NSKeyedArchiver.archivedData(withRootObject: NSColor(overlayColor), requiringSecureCoding: false) {
+            UserDefaults.standard.set(overlayColorData, forKey: "overlayColor")
+        }
+        if let overlayBgColorData = try? NSKeyedArchiver.archivedData(withRootObject: NSColor(overlayBgColor), requiringSecureCoding: false) {
+            UserDefaults.standard.set(overlayBgColorData, forKey: "overlayBgColor")
+        }
     }
     
     var iconView: some View {
@@ -254,7 +273,9 @@ struct ContentView: View {
                  overlayColor: overlayColor,
                  overlayBgColor: overlayBgColor,
                  dropShadow: dropShadow,
-                 backgroundGradient: backgroundGradient)
+                 backgroundGradient: backgroundGradient,
+                 overlayDropShadow: overlayDropShadow,
+                 overlayBackgroundGradient: overlayBackgroundGradient)
     }
 }
 
