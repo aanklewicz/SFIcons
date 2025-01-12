@@ -29,9 +29,19 @@ struct ContentView: View {
         }
         return .white
     }()
+    
+    @State private var secondarySymbolColour: Color = {
+        if let data = UserDefaults.standard.data(forKey: "secondarySymbolColour"),
+           let color = try? NSKeyedUnarchiver.unarchivedObject(ofClass: NSColor.self, from: data) {
+            return Color(color)
+        }
+        return .white
+    }()
 
     @State private var sfSymbolName: String = UserDefaults.standard.string(forKey: "sfSymbolName") ?? "externaldrive.connected.to.line.below"
     @State private var iconSize: CGFloat = CGFloat(UserDefaults.standard.float(forKey: "iconSize") == 0 ? 512 : UserDefaults.standard.float(forKey: "iconSize"))
+    
+    @State private var symbolColourStyle: String = UserDefaults.standard.string(forKey: "symbolColourStyle") ?? "Monotone"
     
     // Variables for Advanced Settings
     @State private var dropShadow: Bool = UserDefaults.standard.object(forKey: "dropShadow") as? Bool ?? true
@@ -79,7 +89,9 @@ struct ContentView: View {
                          dropShadow: dropShadow,
                          backgroundGradient: backgroundGradient,
                          overlayDropShadow: overlayDropShadow,
-                         overlayBackgroundGradient: overlayBackgroundGradient)
+                         overlayBackgroundGradient: overlayBackgroundGradient,
+                         symbolColourStyle: symbolColourStyle,
+                         secondarySymbolColour: secondarySymbolColour)
 
 
                 HStack {
@@ -105,10 +117,23 @@ struct ContentView: View {
                 TextField("Enter SFSymbol Name", text: $sfSymbolName)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .frame(width: 200)
+                
+                // SFSymbol Colour Style
+                Picker(selection: $symbolColourStyle, label: Text("Select Symbol Colour Style")) {
+                    Text("Monotone").tag("Monotone")
+                    Text("Gradient").tag("Gradient")
+                    Text("Palette").tag("Palette")
+                }
+                    .font(.headline)
 
                 // SFSymbol Colour Picker
-               ColorPicker("Select Symbol Colour", selection: $symbolColor)
+                ColorPicker("Select Symbol Colour", selection: $symbolColor)
                     .font(.headline)
+                
+                if symbolColourStyle != "Monotone" {
+                    ColorPicker("Secondary Symbol Colour", selection: $secondarySymbolColour)
+                        .font(.headline)
+                }
                 
                 // Base Colour Picker
                 ColorPicker("Select Background Colour", selection: $backgroundColor)
@@ -259,7 +284,11 @@ struct ContentView: View {
         if let symbolColorData = try? NSKeyedArchiver.archivedData(withRootObject: NSColor(symbolColor), requiringSecureCoding: false) {
             UserDefaults.standard.set(symbolColorData, forKey: "symbolColor")
         }
+        if let secondarySymbolColourData = try? NSKeyedArchiver.archivedData(withRootObject: NSColor(secondarySymbolColour), requiringSecureCoding: false) {
+            UserDefaults.standard.set(secondarySymbolColourData, forKey: "secondarySymbolColour")
+        }
         UserDefaults.standard.set(sfSymbolName, forKey: "sfSymbolName")
+        UserDefaults.standard.set(symbolColourStyle, forKey: "symbolColourStyle")
         UserDefaults.standard.set(Float(iconSize), forKey: "iconSize")
         UserDefaults.standard.set(Float(sfsymbolSize), forKey: "sfsymbolSize")
         UserDefaults.standard.set(dropShadow, forKey: "dropShadow")
@@ -288,7 +317,9 @@ struct ContentView: View {
                  dropShadow: dropShadow,
                  backgroundGradient: backgroundGradient,
                  overlayDropShadow: overlayDropShadow,
-                 overlayBackgroundGradient: overlayBackgroundGradient)
+                 overlayBackgroundGradient: overlayBackgroundGradient,
+                 symbolColourStyle: symbolColourStyle,
+                 secondarySymbolColour: secondarySymbolColour)
     }
 }
 

@@ -14,6 +14,8 @@ struct IconView: View {
     var backgroundGradient: Bool = true
     var overlayDropShadow: Bool = true
     var overlayBackgroundGradient: Bool = true
+    var symbolColourStyle: String
+    var secondarySymbolColour: Color
 
     var body: some View {
         let saturatedColor: Color = {
@@ -44,12 +46,45 @@ struct IconView: View {
                 .background(Color.clear)
                 .shadow(radius: dropShadow ? 5 : 0, x: 0, y: dropShadow ? 5 : 0)
 
-            Image(systemName: sfSymbolName)
-                .resizable()
-                .scaledToFit()
-                .foregroundColor(symbolColor)
-                .frame(width: iconSize * sfsymbolSize / 100, height: iconSize * sfsymbolSize / 100)
-                .shadow(radius: dropShadow ? 5 : 0, x: 0, y: dropShadow ? 5 : 0)
+            if symbolColourStyle == "Monotone" {
+                Image(systemName: sfSymbolName)
+                    .resizable()
+                    .scaledToFit()
+                    .foregroundColor(symbolColor)
+                    .frame(width: iconSize * sfsymbolSize / 100, height: iconSize * sfsymbolSize / 100)
+                    .shadow(radius: dropShadow ? 5 : 0, x: 0, y: dropShadow ? 5 : 0)
+            }
+            else if symbolColourStyle == "Gradient" {
+                Image(systemName: "sfSymbolName")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: iconSize * sfsymbolSize / 100, height: iconSize * sfsymbolSize / 100)
+                    .overlay(
+                        LinearGradient(
+                            gradient: Gradient(colors: [symbolColor, secondarySymbolColour]),
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                        .mask(
+                            Image(systemName: sfSymbolName)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: iconSize * sfsymbolSize / 100, height: iconSize * sfsymbolSize / 100)
+                        )
+                    )
+                    .shadow(radius: dropShadow ? 5 : 0, x: 0, y: dropShadow ? 5 : 0)
+            }
+            else if symbolColourStyle == "Palette" {
+                Image(systemName: sfSymbolName)
+                    .resizable()
+                    .scaledToFit()
+                    .symbolRenderingMode(.palette)
+                    .foregroundStyle(symbolColor, secondarySymbolColour)
+                    .frame(width: iconSize * sfsymbolSize / 100, height: iconSize * sfsymbolSize / 100)
+                    .shadow(radius: dropShadow ? 5 : 0, x: 0, y: dropShadow ? 5 : 0)
+            }
+            
+            
         }
         .overlay(
             Group {

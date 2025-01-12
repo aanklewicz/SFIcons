@@ -169,6 +169,12 @@
         }
       }
     },
+    "Gradient" : {
+
+    },
+    "Monotone" : {
+
+    },
     "Overlay" : {
       "localizations" : {
         "en" : {
@@ -242,6 +248,12 @@
       }
     },
     "Overlay Drop Shadow" : {
+
+    },
+    "Palette" : {
+
+    },
+    "Secondary Symbol Colour" : {
 
     },
     "Select Background Colour" : {
@@ -323,6 +335,9 @@
           }
         }
       }
+    },
+    "Select Symbol Colour Style" : {
+
     },
     "SFSymbol Size: %@%%" : {
       "localizations" : {
