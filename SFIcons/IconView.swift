@@ -55,7 +55,7 @@ struct IconView: View {
                     .shadow(radius: dropShadow ? 5 : 0, x: 0, y: dropShadow ? 5 : 0)
             }
             else if symbolColourStyle == "Gradient" {
-                Image(systemName: "sfSymbolName")
+                Image(systemName: sfSymbolName)
                     .resizable()
                     .scaledToFit()
                     .frame(width: iconSize * sfsymbolSize / 100, height: iconSize * sfsymbolSize / 100)
