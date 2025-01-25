@@ -65,12 +65,12 @@ struct SFIconsCLI: ParsableCommand {
         guard let foregroundColor = NSColor(hex: colour),
               let backgroundColor = NSColor(hex: bgcolour),
               let overlayColor = NSColor(hex: overlaycolour),
-              let overlayBackgroundColor = NSColor(hex: overlaybgcolour)else {
+              let overlayBackgroundColor = NSColor(hex: overlaybgcolour) else {
             throw ValidationError("Invalid color format. Please use HEX format (e.g., #FFFFFF).")
         }
 
         // Generate the icon
-        let image = generateSymbolImage(symbol: symbol, foregroundColor: foregroundColor, backgroundColor: backgroundColor, overlayColor: overlayColor, overlayBackgroundColor: overlayBackgroundColor, percent: percentforsymbol)
+        let image = generateSymbolImage(symbol: symbol, foregroundColor: foregroundColor, backgroundColor: backgroundColor, overlayColor: overlayColor, overlayBackgroundColor: overlayBackgroundColor, percent: percentforsymbol, style: style, overlaysymbol: overlaysymbol, dropshadow: dropshadow, gradient: gradient, overlaydropshadow: overlaydropshadow, overlaygradient: overlaygradient)
         
         // Save the icon
         let outputPath = NSString(string: output).expandingTildeInPath
@@ -82,7 +82,7 @@ struct SFIconsCLI: ParsableCommand {
 }
 
 // Helper functions
-func generateSymbolImage(symbol: String, foregroundColor: NSColor, backgroundColor: NSColor, overlayColor: NSColor, overlayBackgroundColor: NSColor, percent: Double) -> NSImage {
+func generateSymbolImage(symbol: String, foregroundColor: NSColor, backgroundColor: NSColor, overlayColor: NSColor, overlayBackgroundColor: NSColor, percent: Double, style: SFIconsCLI.Style, overlaysymbol: String?, dropshadow: Bool, gradient: Bool, overlaydropshadow: Bool, overlaygradient: Bool) -> NSImage {
     let totalSize: Double = 416 // 512 - 2 * 48 (border size)
     let borderSize: CGFloat = 48
     let newSize = totalSize + 2 * Double(borderSize)
