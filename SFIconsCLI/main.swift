@@ -18,7 +18,7 @@ struct SFIconsCLI: ParsableCommand {
     var colour: String
     
     @Option(name: [.long, .customLong("secondarycolor"), .customShort("S")], help: "The secondary foreground colour of the symbol in HEX format (e.g., #FFFFFF).")
-    var secondarycolour: String = "#FFFFFF"
+    var secondarycolour: String?
 
     @Option(name: [.short, .long, .customLong("bgcolor")], help: "The background colour of the icon in HEX format (e.g., #469DD4).")
     var bgcolour: String
@@ -63,11 +63,20 @@ struct SFIconsCLI: ParsableCommand {
     @Option(name: .shortAndLong, help: "The output file path (e.g., ~/Desktop/icon.png).")
     var output: String
 
-    func run() throws {
+    mutating func validateSecondaryColour() {
+        if secondarycolour == nil || secondarycolour?.isEmpty == true {
+            secondarycolour = colour
+        }
+    }
+
+    mutating func run() throws {
+        // Validate secondary colour
+        validateSecondaryColour()
+
         // Validate colors
         guard let foregroundColor = NSColor(hex: colour),
               let backgroundColor = NSColor(hex: bgcolour),
-              let secondaryColor = NSColor(hex: secondarycolour),
+              let secondaryColor = NSColor(hex: secondarycolour ?? colour),
               let overlayColor = NSColor(hex: overlaycolour),
               let overlayBackgroundColor = NSColor(hex: overlaybgcolour) else {
             throw ValidationError("Invalid color format. Please use HEX format (e.g., #FFFFFF).")
@@ -118,10 +127,19 @@ func generateSymbolImage(symbol: String,
     let cornerRadius: CGFloat = 64 // Adjust this for the desired corner radius
     
     let config = NSImage.SymbolConfiguration(pointSize: (totalSize * percent / 100), weight: .regular)
-        .applying(.init(paletteColors: [foregroundColor]))
-    let image = NSImage(systemSymbolName: symbol, accessibilityDescription: nil)?
+    var image = NSImage(systemSymbolName: symbol, accessibilityDescription: nil)?
         .withSymbolConfiguration(config)
     
+    if style == "gradient" {
+        let gradientImage = NSImage(size: image?.size ?? .zero)
+        gradientImage.lockFocus()
+        let gradient = NSGradient(colors: [foregroundColor, secondaryColor])
+        gradient?.draw(in: NSRect(origin: .zero, size: image?.size ?? .zero), angle: 0)
+        image?.draw(at: .zero, from: .zero, operation: .sourceAtop, fraction: 1.0)
+        gradientImage.unlockFocus()
+        image = gradientImage
+    }
+
     let finalImage = NSImage(size: size)
     finalImage.lockFocus()
     
