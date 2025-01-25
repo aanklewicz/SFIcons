@@ -16,6 +16,9 @@ struct SFIconsCLI: ParsableCommand {
 
     @Option(name: [.short, .long, .customLong("color")], help: "The foreground colour of the symbol in HEX format (e.g., #FFFFFF).")
     var colour: String
+    
+    @Option(name: [.long, .customLong("secondarycolor"), .customShort("S")], help: "The secondary foreground colour of the symbol in HEX format (e.g., #FFFFFF).")
+    var secondarycolour: String = "#FFFFFF"
 
     @Option(name: [.short, .long, .customLong("bgcolor")], help: "The background colour of the icon in HEX format (e.g., #469DD4).")
     var bgcolour: String
@@ -25,7 +28,7 @@ struct SFIconsCLI: ParsableCommand {
     }
 
     @Option(name: [.long, .customShort("y")], help: "The style of the SF Symbol. Default is `monotone`, other acceptable options are `gradient` and `palette`.")
-    var style: Style = .monotone
+    var style: String = "monotone"
     
     @Option(name: .shortAndLong, help: "The percentage size of the SF Symbol")
     var percentforsymbol: Double
@@ -64,13 +67,26 @@ struct SFIconsCLI: ParsableCommand {
         // Validate colors
         guard let foregroundColor = NSColor(hex: colour),
               let backgroundColor = NSColor(hex: bgcolour),
+              let secondaryColor = NSColor(hex: secondarycolour),
               let overlayColor = NSColor(hex: overlaycolour),
               let overlayBackgroundColor = NSColor(hex: overlaybgcolour) else {
             throw ValidationError("Invalid color format. Please use HEX format (e.g., #FFFFFF).")
         }
 
         // Generate the icon
-        let image = generateSymbolImage(symbol: symbol, foregroundColor: foregroundColor, backgroundColor: backgroundColor, overlayColor: overlayColor, overlayBackgroundColor: overlayBackgroundColor, percent: percentforsymbol, style: style, overlaysymbol: overlaysymbol, dropshadow: dropshadow, gradient: gradient, overlaydropshadow: overlaydropshadow, overlaygradient: overlaygradient)
+        let image = generateSymbolImage(symbol: symbol,
+                                        foregroundColor: foregroundColor,
+                                        backgroundColor: backgroundColor,
+                                        overlayColor: overlayColor,
+                                        overlayBackgroundColor: overlayBackgroundColor,
+                                        percent: percentforsymbol,
+                                        style: style,
+                                        overlaysymbol: overlaysymbol,
+                                        dropshadow: dropshadow,
+                                        gradient: gradient,
+                                        overlaydropshadow: overlaydropshadow,
+                                        overlaygradient: overlaygradient,
+                                        secondaryColor: secondaryColor)
         
         // Save the icon
         let outputPath = NSString(string: output).expandingTildeInPath
@@ -82,7 +98,19 @@ struct SFIconsCLI: ParsableCommand {
 }
 
 // Helper functions
-func generateSymbolImage(symbol: String, foregroundColor: NSColor, backgroundColor: NSColor, overlayColor: NSColor, overlayBackgroundColor: NSColor, percent: Double, style: SFIconsCLI.Style, overlaysymbol: String?, dropshadow: Bool, gradient: Bool, overlaydropshadow: Bool, overlaygradient: Bool) -> NSImage {
+func generateSymbolImage(symbol: String,
+                         foregroundColor: NSColor,
+                         backgroundColor: NSColor,
+                         overlayColor: NSColor,
+                         overlayBackgroundColor: NSColor,
+                         percent: Double,
+                         style: String,
+                         overlaysymbol: String?,
+                         dropshadow: Bool,
+                         gradient: Bool,
+                         overlaydropshadow: Bool,
+                         overlaygradient: Bool,
+                         secondaryColor: NSColor) -> NSImage {
     let totalSize: Double = 416 // 512 - 2 * 48 (border size)
     let borderSize: CGFloat = 48
     let newSize = totalSize + 2 * Double(borderSize)
