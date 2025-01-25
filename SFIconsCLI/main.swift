@@ -8,6 +8,8 @@ struct SFIconsCLI: ParsableCommand {
         commandName: "sficons",
         abstract: "Generate SF Symbols with custom colors and export them as PNG files."
     )
+    
+    // Primary options
 
     @Option(name: .shortAndLong, help: "The name of the SF Symbol to use.")
     var symbol: String
@@ -18,8 +20,42 @@ struct SFIconsCLI: ParsableCommand {
     @Option(name: [.short, .long, .customLong("bgcolor")], help: "The background colour of the icon in HEX format (e.g., #469DD4).")
     var bgcolour: String
     
+    enum Style: String, ExpressibleByArgument {
+        case monotone, gradient, palette
+    }
+
+    @Option(name: [.long, .customShort("y")], help: "The style of the SF Symbol. Default is `monotone`, other acceptable options are `gradient` and `palette`.")
+    var style: Style = .monotone
+    
     @Option(name: .shortAndLong, help: "The percentage size of the SF Symbol")
     var percentforsymbol: Double
+    
+    // All the overlay options
+    
+    @Option(name: [.long, .customShort("O")], help: "Add an overlay to the bottom right corner, must pass the value for an SF Symbol, eg. `cat`.")
+    var overlaysymbol: String?
+    
+    @Option(name: [.long, .customShort("C"), .customLong("overlaycolor")], help: "The overlay foreground colour of the symbol in HEX format (e.g., #FFFFFF).")
+    var overlaycolour: String = "#FFFFFF"
+    
+    @Option(name: [.long, .customShort("B"), .customLong("overlaybgcolor")], help: "The overlay background colour of the symbol in HEX format (e.g., #469DD4).")
+    var overlaybgcolour: String = "#469DD4"
+    
+    // All the advanced options
+    
+    @Option(name: .shortAndLong, help: "Passing this flag will set a gradient on the icon.")
+    var dropshadow: Bool = false
+    
+    @Option(name: .shortAndLong, help: "Passing this flag will set a gradient on the icon.")
+    var gradient: Bool = false
+    
+    @Option(name: [.long, .customShort("D")], help: "Passing this flag will set a gradient on the overlay.")
+    var overlaydropshadow: Bool = false
+    
+    @Option(name: [.long, .customShort("G")], help: "Passing this flag will set a gradient on the overlay.")
+    var overlaygradient: Bool = false
+    
+    // Output option
 
     @Option(name: .shortAndLong, help: "The output file path (e.g., ~/Desktop/icon.png).")
     var output: String
@@ -27,12 +63,14 @@ struct SFIconsCLI: ParsableCommand {
     func run() throws {
         // Validate colors
         guard let foregroundColor = NSColor(hex: colour),
-              let backgroundColor = NSColor(hex: bgcolour) else {
+              let backgroundColor = NSColor(hex: bgcolour),
+              let overlayColor = NSColor(hex: overlaycolour),
+              let overlayBackgroundColor = NSColor(hex: overlaybgcolour)else {
             throw ValidationError("Invalid color format. Please use HEX format (e.g., #FFFFFF).")
         }
 
         // Generate the icon
-        let image = generateSymbolImage(symbol: symbol, foregroundColor: foregroundColor, backgroundColor: backgroundColor, percent: percentforsymbol)
+        let image = generateSymbolImage(symbol: symbol, foregroundColor: foregroundColor, backgroundColor: backgroundColor, overlayColor: overlayColor, overlayBackgroundColor: overlayBackgroundColor, percent: percentforsymbol)
         
         // Save the icon
         let outputPath = NSString(string: output).expandingTildeInPath
@@ -44,7 +82,7 @@ struct SFIconsCLI: ParsableCommand {
 }
 
 // Helper functions
-func generateSymbolImage(symbol: String, foregroundColor: NSColor, backgroundColor: NSColor, percent: Double) -> NSImage {
+func generateSymbolImage(symbol: String, foregroundColor: NSColor, backgroundColor: NSColor, overlayColor: NSColor, overlayBackgroundColor: NSColor, percent: Double) -> NSImage {
     let totalSize: Double = 416 // 512 - 2 * 48 (border size)
     let borderSize: CGFloat = 48
     let newSize = totalSize + 2 * Double(borderSize)
