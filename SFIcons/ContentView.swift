@@ -72,113 +72,84 @@ struct ContentView: View {
         return 48 * 512 / iconSize
     }
 
+    @State private var showInspector: Bool = true
 
     var body: some View {
-        HStack {
-            // Icon View
-            VStack {
-                iconRenderer.iconView
-
-
-                HStack {
-                    // Share Button
-                    Button(action: shareIcon) {
-                        Label(NSLocalizedString("Share", comment: "Share button label"), systemImage: "square.and.arrow.up")
-                    }
-                    .keyboardShortcut("s")
-
-                    // Export Button
-                    Button(action: saveIconToFileSystem) {
-                        Label("Export", systemImage: "folder")
-                    }
-                    .keyboardShortcut("e")
-                    .padding()
+        // Main content: icon preview and action buttons
+        VStack {
+            Spacer()
+            iconRenderer.iconView
+            Spacer()
+            HStack {
+                Button(action: shareIcon) {
+                    Label(NSLocalizedString("Share", comment: "Share button label"), systemImage: "square.and.arrow.up")
                 }
+                .keyboardShortcut("s")
+
+                Button(action: saveIconToFileSystem) {
+                    Label("Export", systemImage: "folder")
+                }
+                .keyboardShortcut("e")
             }
-            .padding()
-
-            // Options Panel
-            VStack(alignment: .leading) {
-                // SFSymbol
-                TextField("Enter SFSymbol Name", text: $sfSymbolName)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .frame(width: 200)
-                
-                // SFSymbol Colour Style
-                Picker(selection: $symbolColourStyle, label: Text("Select Symbol Colour Style")) {
-                    Text("Monotone").tag("Monotone")
-                    Text("Gradient").tag("Gradient")
-                    Text("Palette").tag("Palette")
-                }
-                    .font(.headline)
-
-                // SFSymbol Colour Picker
-                ColorPicker("Select Symbol Colour", selection: $symbolColor)
-                    .font(.headline)
-                
-                if symbolColourStyle != "Monotone" {
-                    ColorPicker("Secondary Symbol Colour", selection: $secondarySymbolColour)
-                        .font(.headline)
-                }
-                
-                // Base Colour Picker
-                ColorPicker("Select Background Colour", selection: $backgroundColor)
-                    .font(.headline)
-                
-                // SFSymbol Slider
-                Text("SFSymbol Size: \(String(format: "%.0f", sfsymbolSize))%")
-                    .font(.headline)
-                Slider(value: $sfsymbolSize, in: 1...100)
-                
-                // Overlay Disclosure Group
-                DisclosureGroup("Add an overlay") {
-                    VStack(alignment: .leading) {
-                        TextField("Overlay", text: $overlay)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                            .frame(width: 200)
-                        
-                        ColorPicker("Overlay Colour", selection: $overlayColor)
-                            .font(.headline)
-                        
-                        ColorPicker("Overlay Background Colour", selection: $overlayBgColor)
-                            .font(.headline)
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding([.leading], 15)
-                    
-                    // Advanced items for Overlay
-                    DisclosureGroup("Overlay Advanced") {
-                        VStack(alignment: .leading) {
-                            Toggle("Overlay Drop Shadow", isOn: $overlayDropShadow)
-                                .font(.headline)
-                            
-                            Toggle("Overlay Background Gradient", isOn: $overlayBackgroundGradient)
-                                .font(.headline)
-                        }
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding([.leading], 15)
-                    }
-                }
-                .font(.headline)
-                
-                // Advanced Disclosure Group
-                DisclosureGroup("Advanced") {
-                    VStack(alignment: .leading) {
-                        Toggle("Drop Shadow", isOn: $dropShadow)
-                            .font(.headline)
-                        
-                        Toggle("Background Gradient", isOn: $backgroundGradient)
-                            .font(.headline)
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding([.leading], 15)
-                }
-                .font(.headline)
-            }
-            .padding()
+            .padding(.bottom)
         }
-        .frame(minWidth: 800, minHeight: 600)
-        .padding()
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .toolbar {
+            ToolbarItem(placement: .automatic) {
+                Button {
+                    showInspector.toggle()
+                } label: {
+                    Label("Inspector", systemImage: "sidebar.trailing")
+                }
+                .help("Toggle Inspector")
+            }
+        }
+        .inspector(isPresented: $showInspector) {
+            Form {
+                Section("Symbol") {
+                    TextField("Enter SFSymbol Name", text: $sfSymbolName)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+
+                    Picker("Select Symbol Colour Style", selection: $symbolColourStyle) {
+                        Text("Monotone").tag("Monotone")
+                        Text("Gradient").tag("Gradient")
+                        Text("Palette").tag("Palette")
+                    }
+
+                    ColorPicker("Select Symbol Colour", selection: $symbolColor)
+
+                    if symbolColourStyle != "Monotone" {
+                        ColorPicker("Secondary Symbol Colour", selection: $secondarySymbolColour)
+                    }
+
+                    ColorPicker("Select Background Colour", selection: $backgroundColor)
+
+                    Text("SFSymbol Size: \(String(format: "%.0f", sfsymbolSize))%")
+                    Slider(value: $sfsymbolSize, in: 1...100)
+                }
+
+                Section("Overlay") {
+                    TextField("Overlay", text: $overlay)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+
+                    ColorPicker("Overlay Colour", selection: $overlayColor)
+
+                    ColorPicker("Overlay Background Colour", selection: $overlayBgColor)
+
+                    Toggle("Overlay Drop Shadow", isOn: $overlayDropShadow)
+
+                    Toggle("Overlay Background Gradient", isOn: $overlayBackgroundGradient)
+                }
+
+                Section("Advanced") {
+                    Toggle("Drop Shadow", isOn: $dropShadow)
+
+                    Toggle("Background Gradient", isOn: $backgroundGradient)
+                }
+            }
+            .inspectorColumnWidth(min: 250, ideal: 300, max: 400)
+        }
+        .frame(minWidth: 600, minHeight: 500)
         .onDisappear {
             saveState()
         }
