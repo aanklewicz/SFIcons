@@ -29,6 +29,35 @@ There are over 6,000 SF Symbols to choose from. To browse available symbol names
 
 The CLI uses the same rendering engine as the GUI, so output is identical.
 
+#### Installing the symlink
+
+Until version 2, the app was distributed with a PKG that included a script to create the symlink. I've decided to do away with that. If you want to use the CLI, please either call the full path `/Applications/SFIcons.app/Contents/SharedSupport/sficons` or add a symlink on your own.
+
+```
+#!/bin/zsh --no-rcs
+
+symlink="/usr/local/bin/sficons"
+appPath="/Applications/SFIcons.app/Contents/SharedSupport/sficons"
+
+if [ -L "$symlink" ]; then
+    echo "Symlink already exists. Nothing to do."
+    exit 0
+fi
+
+ln -s "$appPath" "$symlink"
+
+if [ $? -eq 0 ]; then
+    echo "Symlink created successfully."
+else
+    echo "Failed to create symlink."
+    exit 1
+fi
+
+exit 0
+```
+
+#### Usage of CLI
+
 ```
 USAGE: sficons --symbol <symbol> --colour <colour> --bgcolour <bgcolour> --percentforsymbol <percentforsymbol> --output <output> [options]
 ```
