@@ -10,6 +10,47 @@ struct ContentView_Previews: PreviewProvider {
     }
 }
 
+struct IconSettings: Codable {
+    var sfSymbolName: String
+    var symbolColourStyle: String
+    var symbolColor: String
+    var secondarySymbolColour: String
+    var backgroundColor: String
+    var sfsymbolSize: Double
+    var overlay: String
+    var overlayPosition: String
+    var overlayColor: String
+    var overlayBgColor: String
+    var overlayDropShadow: Bool
+    var overlayBackgroundGradient: Bool
+    var dropShadow: Bool
+    var backgroundGradient: Bool
+}
+
+extension Color {
+    func toHex() -> String {
+        let nsColor = NSColor(self).usingColorSpace(.deviceRGB) ?? NSColor(self)
+        let r = Int(round(nsColor.redComponent * 255))
+        let g = Int(round(nsColor.greenComponent * 255))
+        let b = Int(round(nsColor.blueComponent * 255))
+        return String(format: "#%02X%02X%02X", r, g, b)
+    }
+
+    init?(hex: String) {
+        var hexString = hex
+        if hexString.hasPrefix("#") {
+            hexString.removeFirst()
+        }
+        guard hexString.count == 6,
+              let rgb = Int(hexString, radix: 16) else { return nil }
+        self.init(
+            red: Double((rgb >> 16) & 0xFF) / 255.0,
+            green: Double((rgb >> 8) & 0xFF) / 255.0,
+            blue: Double(rgb & 0xFF) / 255.0
+        )
+    }
+}
+
 struct ContentView: View {
     // Setting up the variables
     
@@ -87,10 +128,25 @@ struct ContentView: View {
                 }
                 .keyboardShortcut("s")
 
-                Button(action: saveIconToFileSystem) {
+                Menu {
+                    Button(action: exportIconAsPNG) {
+                        Label("Export as PNG", systemImage: "photo")
+                    }
+                    Button(action: exportSettingsAsJSON) {
+                        Label("Export Settings", systemImage: "doc.text")
+                    }
+                } label: {
                     Label("Export", systemImage: "folder")
                 }
-                .keyboardShortcut("e")
+
+                Button(action: importSettingsFromJSON) {
+                    Label("Import Settings", systemImage: "square.and.arrow.down")
+                }
+                .keyboardShortcut("i")
+
+                Button(action: resetToDefaults) {
+                    Label("Reset to Defaults", systemImage: "arrow.counterclockwise")
+                }
             }
             .padding(.bottom)
         }
@@ -213,7 +269,7 @@ struct ContentView: View {
         }
     }
 
-    func saveIconToFileSystem() {
+    func exportIconAsPNG() {
         guard let pngData = iconRenderer.renderToPNGData() else {
             print("Failed to render the icon.")
             return
@@ -239,6 +295,102 @@ struct ContentView: View {
                 }
             }
         }
+    }
+
+    func exportSettingsAsJSON() {
+        let settings = IconSettings(
+            sfSymbolName: sfSymbolName,
+            symbolColourStyle: symbolColourStyle,
+            symbolColor: symbolColor.toHex(),
+            secondarySymbolColour: secondarySymbolColour.toHex(),
+            backgroundColor: backgroundColor.toHex(),
+            sfsymbolSize: sfsymbolSize,
+            overlay: overlay,
+            overlayPosition: overlayPosition,
+            overlayColor: overlayColor.toHex(),
+            overlayBgColor: overlayBgColor.toHex(),
+            overlayDropShadow: overlayDropShadow,
+            overlayBackgroundGradient: overlayBackgroundGradient,
+            dropShadow: dropShadow,
+            backgroundGradient: backgroundGradient
+        )
+
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+
+        guard let jsonData = try? encoder.encode(settings) else {
+            print("Failed to encode settings.")
+            return
+        }
+
+        let savePanel = NSSavePanel()
+        savePanel.allowedContentTypes = [UTType.json]
+        savePanel.nameFieldStringValue = "icon-settings.json"
+
+        savePanel.begin { result in
+            if result == .OK, let url = savePanel.url {
+                do {
+                    try jsonData.write(to: url)
+                    print("Settings saved to: \(url.path)")
+                } catch {
+                    print("Failed to save settings: \(error)")
+                }
+            }
+        }
+    }
+
+    func importSettingsFromJSON() {
+        let openPanel = NSOpenPanel()
+        openPanel.allowedContentTypes = [UTType.json]
+        openPanel.allowsMultipleSelection = false
+
+        openPanel.begin { result in
+            if result == .OK, let url = openPanel.url {
+                do {
+                    let data = try Data(contentsOf: url)
+                    let settings = try JSONDecoder().decode(IconSettings.self, from: data)
+                    applySettings(settings)
+                } catch {
+                    print("Failed to import settings: \(error)")
+                }
+            }
+        }
+    }
+
+    private func applySettings(_ settings: IconSettings) {
+        sfSymbolName = settings.sfSymbolName
+        symbolColourStyle = settings.symbolColourStyle
+        sfsymbolSize = settings.sfsymbolSize
+        overlay = settings.overlay
+        overlayPosition = settings.overlayPosition
+        overlayDropShadow = settings.overlayDropShadow
+        overlayBackgroundGradient = settings.overlayBackgroundGradient
+        dropShadow = settings.dropShadow
+        backgroundGradient = settings.backgroundGradient
+
+        if let color = Color(hex: settings.symbolColor) { symbolColor = color }
+        if let color = Color(hex: settings.secondarySymbolColour) { secondarySymbolColour = color }
+        if let color = Color(hex: settings.backgroundColor) { backgroundColor = color }
+        if let color = Color(hex: settings.overlayColor) { overlayColor = color }
+        if let color = Color(hex: settings.overlayBgColor) { overlayBgColor = color }
+    }
+
+    private func resetToDefaults() {
+        backgroundColor = Color(red: 0.0196, green: 0.2667, blue: 0.3686)
+        symbolColor = .white
+        secondarySymbolColour = .white
+        sfSymbolName = "externaldrive.connected.to.line.below"
+        iconSize = 512
+        symbolColourStyle = "Monotone"
+        sfsymbolSize = 75
+        dropShadow = true
+        backgroundGradient = true
+        overlay = ""
+        overlayPosition = "Bottom Trailing"
+        overlayColor = Color(red: 0.8314, green: 0.9451, blue: 0.9569)
+        overlayBgColor = Color(red: 0.0941, green: 0.6039, blue: 0.7059)
+        overlayDropShadow = true
+        overlayBackgroundGradient = true
     }
 
     private func saveState() {
