@@ -51,6 +51,45 @@ extension Color {
     }
 }
 
+struct ColourPalette: Identifiable {
+    let id: String
+    let name: String
+    let colours: [Color]
+
+    static let palettes: [ColourPalette] = [
+        ColourPalette(id: "purple", name: "Purple", colours: [
+            Color(hex: "#6B3F69")!, Color(hex: "#8D5F8C")!, Color(hex: "#A376A2")!, Color(hex: "#DDC3C3")!
+        ]),
+        ColourPalette(id: "blue", name: "Blue", colours: [
+            Color(hex: "#213448")!, Color(hex: "#547792")!, Color(hex: "#94B4C1")!, Color(hex: "#EAE0CF")!
+        ]),
+        ColourPalette(id: "pastel", name: "Pastel", colours: [
+            Color(hex: "#5A9CB5")!, Color(hex: "#FACE68")!, Color(hex: "#FAAC68")!, Color(hex: "#FA6868")!
+        ]),
+        ColourPalette(id: "kids", name: "Kids", colours: [
+            Color(hex: "#F6B1CE")!, Color(hex: "#1581BF")!, Color(hex: "#3DB6B1")!, Color(hex: "#CCE5CF")!
+        ]),
+        ColourPalette(id: "spring", name: "Spring", colours: [
+            Color(hex: "#F5D2D2")!, Color(hex: "#F8F7BA")!, Color(hex: "#BDE3C3")!, Color(hex: "#A3CCDA")!
+        ]),
+        ColourPalette(id: "grey", name: "Grey", colours: [
+            Color(hex: "#2C3E50")!, Color(hex: "#34495E")!, Color(hex: "#ECF0F1")!, Color(hex: "#BDC3C7")!
+        ]),
+        ColourPalette(id: "retro", name: "Retro", colours: [
+            Color(hex: "#808836")!, Color(hex: "#FFBF00")!, Color(hex: "#FF9A00")!, Color(hex: "#D10363")!
+        ]),
+        ColourPalette(id: "earth", name: "Earth", colours: [
+            Color(hex: "#798645")!, Color(hex: "#FEFAE0")!, Color(hex: "#F2EED7")!, Color(hex: "#626F47")!
+        ]),
+        ColourPalette(id: "space", name: "Space", colours: [
+            Color(hex: "#0F0F0F")!, Color(hex: "#232D3F")!, Color(hex: "#005B41")!, Color(hex: "#008170")!
+        ]),
+        ColourPalette(id: "green", name: "Green", colours: [
+            Color(hex: "#4B5945")!, Color(hex: "#66785F")!, Color(hex: "#91AC8F")!, Color(hex: "#B2C9AD")!
+        ]),
+    ]
+}
+
 struct ContentView: View {
     // Setting up the variables
     
@@ -163,6 +202,23 @@ struct ContentView: View {
         }
         .inspector(isPresented: $showInspector) {
             Form {
+                Section("Colour Palette") {
+                    ForEach(ColourPalette.palettes) { palette in
+                        Button(action: { applyPalette(palette) }) {
+                            HStack {
+                                Text(palette.name)
+                                Spacer()
+                                ForEach(0..<palette.colours.count, id: \.self) { i in
+                                    RoundedRectangle(cornerRadius: 4)
+                                        .fill(palette.colours[i])
+                                        .frame(width: 20, height: 20)
+                                }
+                            }
+                        }
+                        .buttonStyle(.plain)
+                    }
+                }
+
                 Section("Symbol") {
                     TextField("Enter SFSymbol Name", text: $sfSymbolName)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -373,6 +429,13 @@ struct ContentView: View {
         if let color = Color(hex: settings.backgroundColor) { backgroundColor = color }
         if let color = Color(hex: settings.overlayColor) { overlayColor = color }
         if let color = Color(hex: settings.overlayBgColor) { overlayBgColor = color }
+    }
+
+    private func applyPalette(_ palette: ColourPalette) {
+        backgroundColor = palette.colours[0]
+        symbolColor = palette.colours[1]
+        secondarySymbolColour = palette.colours[2]
+        overlayBgColor = palette.colours[3]
     }
 
     private func resetToDefaults() {
