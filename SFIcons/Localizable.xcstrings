@@ -20,6 +20,18 @@
             "state" : "translated",
             "value" : "Add an overlay"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajouter une superposition"
+          }
+        },
+        "fr-CA" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajouter une superposition"
+          }
         }
       }
     },
@@ -41,6 +53,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Advanced"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avancé"
+          }
+        },
+        "fr-CA" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avancé"
           }
         }
       }
@@ -64,6 +88,18 @@
             "state" : "translated",
             "value" : "Background Gradient"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dégradé d'arrière-plan"
+          }
+        },
+        "fr-CA" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dégradé d'arrière-plan"
+          }
         }
       }
     },
@@ -85,6 +121,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Drop Shadow"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ombre portée"
+          }
+        },
+        "fr-CA" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ombre portée"
           }
         }
       }
@@ -188,6 +236,18 @@
             "state" : "translated",
             "value" : "Gradient"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dégradé"
+          }
+        },
+        "fr-CA" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dégradé"
+          }
         }
       }
     },
@@ -206,6 +266,18 @@
           }
         },
         "en-GB" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monotone"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monotone"
+          }
+        },
+        "fr-CA" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Monotone"
@@ -232,6 +304,18 @@
             "state" : "translated",
             "value" : "Overlay"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Superposition"
+          }
+        },
+        "fr-CA" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Superposition"
+          }
         }
       }
     },
@@ -253,6 +337,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Overlay Advanced"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Superposition avancée"
+          }
+        },
+        "fr-CA" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Superposition avancée"
           }
         }
       }
@@ -276,6 +372,18 @@
             "state" : "translated",
             "value" : "Overlay Background Colour"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Couleur d'arrière-plan de la superposition"
+          }
+        },
+        "fr-CA" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Couleur d'arrière-plan de la superposition"
+          }
         }
       }
     },
@@ -297,6 +405,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Overlay Background Gradient"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dégradé d'arrière-plan de la superposition"
+          }
+        },
+        "fr-CA" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dégradé d'arrière-plan de la superposition"
           }
         }
       }
@@ -320,6 +440,18 @@
             "state" : "translated",
             "value" : "Overlay Colour"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Couleur de la superposition"
+          }
+        },
+        "fr-CA" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Couleur de la superposition"
+          }
         }
       }
     },
@@ -342,6 +474,18 @@
             "state" : "translated",
             "value" : "Overlay Drop Shadow"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ombre portée de la superposition"
+          }
+        },
+        "fr-CA" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ombre portée de la superposition"
+          }
         }
       }
     },
@@ -360,6 +504,18 @@
           }
         },
         "en-GB" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Palette"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Palette"
+          }
+        },
+        "fr-CA" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Palette"
@@ -385,6 +541,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Secondary Symbol Colour"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Couleur secondaire du symbole"
+          }
+        },
+        "fr-CA" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Couleur secondaire du symbole"
           }
         }
       }
@@ -488,6 +656,18 @@
             "state" : "translated",
             "value" : "Select Symbol Colour Style"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Style de couleur du symbole"
+          }
+        },
+        "fr-CA" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Style de couleur du symbole"
+          }
         }
       }
     },
@@ -567,5 +747,5 @@
       }
     }
   },
-  "version" : "1.0"
+  "version" : "2.0"
 }

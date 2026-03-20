@@ -77,21 +77,7 @@ struct ContentView: View {
         HStack {
             // Icon View
             VStack {
-                IconView(backgroundColor: backgroundColor,
-                         sfSymbolName: sfSymbolName,
-                         iconSize: iconSize,
-                         sfsymbolSize: sfsymbolSize,
-                         symbolColor: symbolColor,
-                         paddingSize: paddingSize,
-                         overlay: overlay,
-                         overlayColor: overlayColor,
-                         overlayBgColor: overlayBgColor,
-                         dropShadow: dropShadow,
-                         backgroundGradient: backgroundGradient,
-                         overlayDropShadow: overlayDropShadow,
-                         overlayBackgroundGradient: overlayBackgroundGradient,
-                         symbolColourStyle: symbolColourStyle,
-                         secondarySymbolColour: secondarySymbolColour)
+                iconRenderer.iconView
 
 
                 HStack {
@@ -198,79 +184,68 @@ struct ContentView: View {
         }
     }
 
+    private var iconRenderer: IconRenderer {
+        IconRenderer(backgroundColor: backgroundColor,
+                     sfSymbolName: sfSymbolName,
+                     iconSize: iconSize,
+                     sfsymbolSize: sfsymbolSize,
+                     symbolColor: symbolColor,
+                     paddingSize: paddingSize,
+                     overlay: overlay,
+                     overlayColor: overlayColor,
+                     overlayBgColor: overlayBgColor,
+                     dropShadow: dropShadow,
+                     backgroundGradient: backgroundGradient,
+                     overlayDropShadow: overlayDropShadow,
+                     overlayBackgroundGradient: overlayBackgroundGradient,
+                     symbolColourStyle: symbolColourStyle,
+                     secondarySymbolColour: secondarySymbolColour)
+    }
+
     // Share Icon Function
     func shareIcon() {
-        let renderer = ImageRenderer(content: iconView)
-        renderer.scale = 2.0 // Retina-quality rendering
-
-        // Render the icon to PNG
-        if let imageData = renderer.nsImage?.tiffRepresentation,
-           let bitmapImage = NSBitmapImageRep(data: imageData),
-           let pngData = bitmapImage.representation(using: .png, properties: [:]) {
-            // Temporary file for sharing
-            let tempDirectory = FileManager.default.temporaryDirectory
-            let tempURL = tempDirectory.appendingPathComponent("icon.png")
-
-            do {
-                try pngData.write(to: tempURL)
-
-                // Open the share sheet
-                let picker = NSSharingServicePicker(items: [tempURL])
-                if let window = NSApplication.shared.windows.first {
-                    picker.show(relativeTo: .zero, of: window.contentView!, preferredEdge: .minY)
-                }
-            } catch {
-                print("Failed to save PNG: \(error)")
-            }
-        } else {
+        guard let pngData = iconRenderer.renderToPNGData() else {
             print("Failed to render the icon.")
+            return
+        }
+
+        let tempDirectory = FileManager.default.temporaryDirectory
+        let tempURL = tempDirectory.appendingPathComponent("icon.png")
+
+        do {
+            try pngData.write(to: tempURL)
+
+            let picker = NSSharingServicePicker(items: [tempURL])
+            if let window = NSApplication.shared.windows.first {
+                picker.show(relativeTo: .zero, of: window.contentView!, preferredEdge: .minY)
+            }
+        } catch {
+            print("Failed to save PNG: \(error)")
         }
     }
 
     func saveIconToFileSystem() {
-        // Render the icon to PNG
-        let renderer = ImageRenderer(content: iconView)
-        renderer.scale = 2.0 // Retina-quality rendering
-
-        // Ensure nsImage is properly rendered
-        guard let imageData = renderer.nsImage?.tiffRepresentation else {
+        guard let pngData = iconRenderer.renderToPNGData() else {
             print("Failed to render the icon.")
             return
         }
 
-        // Convert to PNG
-        guard let bitmapImage = NSBitmapImageRep(data: imageData),
-              let pngData = bitmapImage.representation(using: .png, properties: [:]) else {
-            print("Failed to convert the image to PNG.")
-            return
-        }
+        let savePanel = NSSavePanel()
+        savePanel.allowedContentTypes = [UTType.png]
+        savePanel.nameFieldStringValue = "icon.png"
 
-        // Perform file-saving operation on a background thread
-        DispatchQueue.global(qos: .userInitiated).async {
-            // Show the save panel on the main thread
-            DispatchQueue.main.async {
-                let savePanel = NSSavePanel()
-                savePanel.allowedContentTypes = [UTType.png]  // Restrict to PNG
-                savePanel.nameFieldStringValue = "icon.png"
-
-                savePanel.begin { result in
-                    if result == .OK, let url = savePanel.url {
-                        // Perform the file write on a background thread
-                        DispatchQueue.global(qos: .background).async {
-                            do {
-                                print("Saving file to: \(url.path)")
-                                try pngData.write(to: url)
-                                DispatchQueue.main.async {
-                                    print("File saved successfully to: \(url.path)")
-                                }
-                            } catch {
-                                DispatchQueue.main.async {
-                                    print("Failed to save file: \(error)")
-                                }
-                            }
+        savePanel.begin { result in
+            if result == .OK, let url = savePanel.url {
+                DispatchQueue.global(qos: .background).async {
+                    do {
+                        try pngData.write(to: url)
+                        DispatchQueue.main.async {
+                            print("File saved successfully to: \(url.path)")
                         }
-                    } else {
-                        print("Save panel was canceled or failed.")
+                    } catch {
+                        DispatchQueue.main.async {
+                            print("Failed to save file: \(error)")
+                        }
                     }
                 }
             }
@@ -304,23 +279,6 @@ struct ContentView: View {
         }
     }
     
-    var iconView: some View {
-        IconView(backgroundColor: backgroundColor,
-                 sfSymbolName: sfSymbolName,
-                 iconSize: iconSize,
-                 sfsymbolSize: sfsymbolSize,
-                 symbolColor: symbolColor,
-                 paddingSize: paddingSize,
-                 overlay: overlay,
-                 overlayColor: overlayColor,
-                 overlayBgColor: overlayBgColor,
-                 dropShadow: dropShadow,
-                 backgroundGradient: backgroundGradient,
-                 overlayDropShadow: overlayDropShadow,
-                 overlayBackgroundGradient: overlayBackgroundGradient,
-                 symbolColourStyle: symbolColourStyle,
-                 secondarySymbolColour: secondarySymbolColour)
-    }
 }
 
 @main

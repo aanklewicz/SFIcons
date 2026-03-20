@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(xcodebuild -scheme SFIconsCLI -destination 'platform=macOS' build)",
+      "Bash(xcodebuild:*)",
+      "Read(//Users/aanklewicz/Library/Developer/Xcode/DerivedData/SFIcons-btcxkwekplsbrxhbmoaozvfbovyk/Build/Products/Debug/**)",
+      "Read(//Users/aanklewicz/Library/Developer/Xcode/DerivedData/SFIcons-btcxkwekplsbrxhbmoaozvfbovyk/Build/Products/Debug/SFIcons.app/Contents/Resources/**)",
+      "Bash(otool -l /Users/aanklewicz/Library/Developer/Xcode/DerivedData/SFIcons-btcxkwekplsbrxhbmoaozvfbovyk/Build/Products/Debug/sficons)",
+      "Bash(/Users/aanklewicz/Library/Developer/Xcode/DerivedData/SFIcons-btcxkwekplsbrxhbmoaozvfbovyk/Build/Products/Debug/sficons -s cat -c FFFFFF -b 000000 -o /tmp/test_prof2.png -p 50)",
+      "Bash(echo \"Exit: $?\")",
+      "Bash(otool -l /Users/aanklewicz/Library/Developer/Xcode/DerivedData/SFIcons-btcxkwekplsbrxhbmoaozvfbovyk/Build/Products/Debug/SFIcons.app/Contents/SharedSupport/sficons)",
+      "Bash(/Users/aanklewicz/Library/Developer/Xcode/DerivedData/SFIcons-btcxkwekplsbrxhbmoaozvfbovyk/Build/Products/Debug/SFIcons.app/Contents/SharedSupport/sficons -s cat -c FFFFFF -b 000000 -o /tmp/test_embedded.png -p 50)"
+    ]
+  }
+}

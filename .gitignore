@@ -1,0 +1,24 @@
+# Xcode
+build/
+DerivedData/
+*.xcodeproj/xcuserdata/
+*.xcworkspace/xcuserdata/
+xcuserdata/
+
+# macOS
+.DS_Store
+*.swp
+*~
+
+# Swift Package Manager
+.build/
+Packages/
+Package.resolved
+
+# Provisioning profiles
+*.mobileprovision
+*.provisionprofile
+
+# LLVM profiling
+*.profraw
+*.profdata
