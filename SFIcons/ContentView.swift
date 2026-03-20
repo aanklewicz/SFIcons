@@ -148,6 +148,8 @@ struct ContentView: View {
     }
 
     @State private var showInspector: Bool = true
+    @State private var showOverlay: Bool = false
+    @State private var showAdvanced: Bool = false
     @State private var showPalettes: Bool = false
 
     var body: some View {
@@ -219,7 +221,7 @@ struct ContentView: View {
                     Slider(value: $sfsymbolSize, in: 1...100)
                 }
 
-                Section("Overlay") {
+                DisclosureGroup("Overlay", isExpanded: $showOverlay) {
                     TextField("Overlay", text: $overlay)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
 
@@ -239,7 +241,7 @@ struct ContentView: View {
                     Toggle("Overlay Background Gradient", isOn: $overlayBackgroundGradient)
                 }
 
-                Section("Advanced") {
+                DisclosureGroup("Advanced", isExpanded: $showAdvanced) {
                     Toggle("Drop Shadow", isOn: $dropShadow)
 
                     Toggle("Background Gradient", isOn: $backgroundGradient)
