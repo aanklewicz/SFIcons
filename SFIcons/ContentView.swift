@@ -72,17 +72,11 @@ struct ColourPalette: Identifiable {
         ColourPalette(id: "spring", name: "Spring", colours: [
             Color(hex: "#F5D2D2")!, Color(hex: "#F8F7BA")!, Color(hex: "#BDE3C3")!, Color(hex: "#A3CCDA")!
         ]),
-        ColourPalette(id: "grey", name: "Grey", colours: [
-            Color(hex: "#2C3E50")!, Color(hex: "#34495E")!, Color(hex: "#ECF0F1")!, Color(hex: "#BDC3C7")!
-        ]),
         ColourPalette(id: "retro", name: "Retro", colours: [
             Color(hex: "#808836")!, Color(hex: "#FFBF00")!, Color(hex: "#FF9A00")!, Color(hex: "#D10363")!
         ]),
         ColourPalette(id: "earth", name: "Earth", colours: [
             Color(hex: "#798645")!, Color(hex: "#FEFAE0")!, Color(hex: "#F2EED7")!, Color(hex: "#626F47")!
-        ]),
-        ColourPalette(id: "space", name: "Space", colours: [
-            Color(hex: "#0F0F0F")!, Color(hex: "#232D3F")!, Color(hex: "#005B41")!, Color(hex: "#008170")!
         ]),
         ColourPalette(id: "green", name: "Green", colours: [
             Color(hex: "#4B5945")!, Color(hex: "#66785F")!, Color(hex: "#91AC8F")!, Color(hex: "#B2C9AD")!
@@ -154,6 +148,7 @@ struct ContentView: View {
     }
 
     @State private var showInspector: Bool = true
+    @State private var showPalettes: Bool = false
 
     var body: some View {
         // Main content: icon preview and action buttons
@@ -202,23 +197,6 @@ struct ContentView: View {
         }
         .inspector(isPresented: $showInspector) {
             Form {
-                Section("Colour Palette") {
-                    ForEach(ColourPalette.palettes) { palette in
-                        Button(action: { applyPalette(palette) }) {
-                            HStack {
-                                Text(palette.name)
-                                Spacer()
-                                ForEach(0..<palette.colours.count, id: \.self) { i in
-                                    RoundedRectangle(cornerRadius: 4)
-                                        .fill(palette.colours[i])
-                                        .frame(width: 20, height: 20)
-                                }
-                            }
-                        }
-                        .buttonStyle(.plain)
-                    }
-                }
-
                 Section("Symbol") {
                     TextField("Enter SFSymbol Name", text: $sfSymbolName)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -265,6 +243,23 @@ struct ContentView: View {
                     Toggle("Drop Shadow", isOn: $dropShadow)
 
                     Toggle("Background Gradient", isOn: $backgroundGradient)
+                }
+
+                DisclosureGroup("Colour Palette", isExpanded: $showPalettes) {
+                    ForEach(ColourPalette.palettes) { palette in
+                        Button(action: { applyPalette(palette) }) {
+                            HStack {
+                                Text(palette.name)
+                                Spacer()
+                                ForEach(0..<palette.colours.count, id: \.self) { i in
+                                    RoundedRectangle(cornerRadius: 4)
+                                        .fill(palette.colours[i])
+                                        .frame(width: 20, height: 20)
+                                }
+                            }
+                        }
+                        .buttonStyle(.plain)
+                    }
                 }
             }
             .inspectorColumnWidth(min: 250, ideal: 300, max: 400)
@@ -435,7 +430,10 @@ struct ContentView: View {
         backgroundColor = palette.colours[0]
         symbolColor = palette.colours[1]
         secondarySymbolColour = palette.colours[2]
+        overlayColor = palette.colours[1]
         overlayBgColor = palette.colours[3]
+        backgroundGradient = false
+        overlayBackgroundGradient = false
     }
 
     private func resetToDefaults() {
