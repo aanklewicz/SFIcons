@@ -15,13 +15,13 @@ struct SFIconsCLI: ParsableCommand {
     @Option(name: .shortAndLong, help: "The name of the SF Symbol to use.")
     var symbol: String
 
-    @Option(name: [.short, .long, .customLong("color")], help: "The foreground colour of the symbol in HEX format (e.g., #FFFFFF).")
+    @Option(name: [.short, .customLong("colour"), .customLong("color")], help: "The foreground colour of the symbol in HEX format (e.g., #FFFFFF).")
     var colour: String
 
-    @Option(name: [.long, .customLong("secondarycolor"), .customShort("S")], help: "The secondary foreground colour of the symbol in HEX format (e.g., #FFFFFF).")
+    @Option(name: [.customShort("S"), .customLong("secondarycolour"), .customLong("secondarycolor")], help: "The secondary foreground colour of the symbol in HEX format (e.g., #FFFFFF).")
     var secondarycolour: String?
 
-    @Option(name: [.short, .long, .customLong("bgcolor")], help: "The background colour of the icon in HEX format (e.g., #469DD4).")
+    @Option(name: [.short, .customLong("bgcolour"), .customLong("bgcolor")], help: "The background colour of the icon in HEX format (e.g., #469DD4).")
     var bgcolour: String
 
     enum Style: String, ExpressibleByArgument {
@@ -31,32 +31,35 @@ struct SFIconsCLI: ParsableCommand {
     @Option(name: [.long, .customShort("y")], help: "The style of the SF Symbol. Default is `monotone`, other acceptable options are `gradient` and `palette`.")
     var style: String = "monotone"
 
-    @Option(name: .shortAndLong, help: "The percentage size of the SF Symbol")
+    @Option(name: .shortAndLong, help: "The percentage size of the SF Symbol.")
     var percentforsymbol: Double
 
     // All the overlay options
 
-    @Option(name: [.long, .customShort("O")], help: "Add an overlay to the bottom right corner, must pass the value for an SF Symbol, eg. `cat`.")
+    @Option(name: [.customLong("overlaysymbol"), .customShort("O")], help: "Add an overlay, must pass the value for an SF Symbol, e.g. `cat`.")
     var overlaysymbol: String?
 
-    @Option(name: [.long, .customShort("C"), .customLong("overlaycolor")], help: "The overlay foreground colour of the symbol in HEX format (e.g., #FFFFFF).")
+    @Option(name: [.customShort("C"), .customLong("overlaycolour"), .customLong("overlaycolor")], help: "The overlay foreground colour of the symbol in HEX format (e.g., #FFFFFF).")
     var overlaycolour: String = "#FFFFFF"
 
-    @Option(name: [.long, .customShort("B"), .customLong("overlaybgcolor")], help: "The overlay background colour of the symbol in HEX format (e.g., #469DD4).")
+    @Option(name: [.customShort("B"), .customLong("overlaybgcolour"), .customLong("overlaybgcolor")], help: "The overlay background colour of the symbol in HEX format (e.g., #469DD4).")
     var overlaybgcolour: String = "#469DD4"
+
+    @Option(name: [.customShort("P"), .customLong("overlayposition")], help: "The corner position for the overlay. Options: `bottomtrailing` (default), `bottomleading`, `toptrailing`, `topleading`.")
+    var overlayposition: String = "bottomtrailing"
 
     // All the advanced options
 
-    @Option(name: .shortAndLong, help: "Passing this flag will set a drop shadow on the icon.")
+    @Option(name: .shortAndLong, help: "Set a drop shadow on the icon.")
     var dropshadow: Bool = false
 
-    @Option(name: .shortAndLong, help: "Passing this flag will set a gradient on the background.")
+    @Option(name: .shortAndLong, help: "Set a gradient on the background.")
     var gradient: Bool = false
 
-    @Option(name: [.long, .customShort("D")], help: "Passing this flag will set a drop shadow on the overlay.")
+    @Option(name: [.customLong("overlaydropshadow"), .customShort("D")], help: "Set a drop shadow on the overlay.")
     var overlaydropshadow: Bool = false
 
-    @Option(name: [.long, .customShort("G")], help: "Passing this flag will set a gradient on the overlay background.")
+    @Option(name: [.customLong("overlaygradient"), .customShort("G")], help: "Set a gradient on the overlay background.")
     var overlaygradient: Bool = false
 
     // Output option
@@ -91,6 +94,15 @@ struct SFIconsCLI: ParsableCommand {
         default: symbolColourStyle = "Monotone"
         }
 
+        // Map overlay position string to Alignment
+        let overlayAlignmentValue: Alignment
+        switch overlayposition.lowercased() {
+        case "topleading": overlayAlignmentValue = .topLeading
+        case "toptrailing": overlayAlignmentValue = .topTrailing
+        case "bottomleading": overlayAlignmentValue = .bottomLeading
+        default: overlayAlignmentValue = .bottomTrailing
+        }
+
         // Use the shared IconRenderer
         let renderer = IconRenderer(
             backgroundColor: Color(foregroundNSColor: backgroundColor),
@@ -107,7 +119,8 @@ struct SFIconsCLI: ParsableCommand {
             overlayDropShadow: overlaydropshadow,
             overlayBackgroundGradient: overlaygradient,
             symbolColourStyle: symbolColourStyle,
-            secondarySymbolColour: Color(foregroundNSColor: secondaryColor))
+            secondarySymbolColour: Color(foregroundNSColor: secondaryColor),
+            overlayPosition: overlayAlignmentValue)
         let pngData = MainActor.assumeIsolated {
             renderer.renderToPNGData()
         }

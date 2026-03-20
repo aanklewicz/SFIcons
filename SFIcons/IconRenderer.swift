@@ -18,6 +18,7 @@ struct IconRenderer {
     var overlayBackgroundGradient: Bool
     var symbolColourStyle: String
     var secondarySymbolColour: Color
+    var overlayPosition: Alignment = .bottomTrailing
 
     var iconView: some View {
         IconView(backgroundColor: backgroundColor,
@@ -34,7 +35,8 @@ struct IconRenderer {
                  overlayDropShadow: overlayDropShadow,
                  overlayBackgroundGradient: overlayBackgroundGradient,
                  symbolColourStyle: symbolColourStyle,
-                 secondarySymbolColour: secondarySymbolColour)
+                 secondarySymbolColour: secondarySymbolColour,
+                 overlayPosition: overlayPosition)
     }
 
     func renderToPNGData() -> Data? {

@@ -66,6 +66,7 @@ struct ContentView: View {
     }()
     @State private var overlayDropShadow: Bool = UserDefaults.standard.object(forKey: "dropShadow") as? Bool ?? true
     @State private var overlayBackgroundGradient: Bool = UserDefaults.standard.object(forKey: "backgroundGradient") as? Bool ?? true
+    @State private var overlayPosition: String = UserDefaults.standard.string(forKey: "overlayPosition") ?? "Bottom Trailing"
     
     // Padding Size variable
     private var paddingSize: CGFloat {
@@ -132,6 +133,13 @@ struct ContentView: View {
                     TextField("Overlay", text: $overlay)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
 
+                    Picker("Overlay Position", selection: $overlayPosition) {
+                        Text("Top Leading").tag("Top Leading")
+                        Text("Top Trailing").tag("Top Trailing")
+                        Text("Bottom Leading").tag("Bottom Leading")
+                        Text("Bottom Trailing").tag("Bottom Trailing")
+                    }
+
                     ColorPicker("Overlay Colour", selection: $overlayColor)
 
                     ColorPicker("Overlay Background Colour", selection: $overlayBgColor)
@@ -155,6 +163,15 @@ struct ContentView: View {
         }
     }
 
+    private var overlayAlignmentValue: Alignment {
+        switch overlayPosition {
+        case "Top Leading": return .topLeading
+        case "Top Trailing": return .topTrailing
+        case "Bottom Leading": return .bottomLeading
+        default: return .bottomTrailing
+        }
+    }
+
     private var iconRenderer: IconRenderer {
         IconRenderer(backgroundColor: backgroundColor,
                      sfSymbolName: sfSymbolName,
@@ -170,7 +187,8 @@ struct ContentView: View {
                      overlayDropShadow: overlayDropShadow,
                      overlayBackgroundGradient: overlayBackgroundGradient,
                      symbolColourStyle: symbolColourStyle,
-                     secondarySymbolColour: secondarySymbolColour)
+                     secondarySymbolColour: secondarySymbolColour,
+                     overlayPosition: overlayAlignmentValue)
     }
 
     // Share Icon Function
@@ -242,6 +260,7 @@ struct ContentView: View {
         UserDefaults.standard.set(overlayDropShadow, forKey: "overlayDropShadow")
         UserDefaults.standard.set(overlayBackgroundGradient, forKey: "overlayBackgroundGradient")
         UserDefaults.standard.set(overlay, forKey: "overlay")
+        UserDefaults.standard.set(overlayPosition, forKey: "overlayPosition")
         if let overlayColorData = try? NSKeyedArchiver.archivedData(withRootObject: NSColor(overlayColor), requiringSecureCoding: false) {
             UserDefaults.standard.set(overlayColorData, forKey: "overlayColor")
         }

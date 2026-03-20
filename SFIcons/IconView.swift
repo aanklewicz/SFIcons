@@ -16,6 +16,7 @@ struct IconView: View {
     var overlayBackgroundGradient: Bool = true
     var symbolColourStyle: String
     var secondarySymbolColour: Color
+    var overlayPosition: Alignment = .bottomTrailing
 
     var body: some View {
         let saturatedColor: Color = {
@@ -105,7 +106,7 @@ struct IconView: View {
                     .padding(78)
                 }
             },
-            alignment: .bottomTrailing
+            alignment: overlayPosition
         )
     }
 }
