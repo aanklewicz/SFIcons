@@ -1,5 +1,10 @@
 # SFIcons
 
+> [!IMPORTANT]
+> **This project is archived and no longer maintained.**
+>
+> A better app is now available: **[Mica](https://github.com/lukecharters/Mica)**. Please use Mica instead of SFIcons.
+
 ![Screenshot of UI](https://www.neverhadtofight.com/wp-content/uploads/2024/12/Screenshot-2025-01-06-at-4.17.55%E2%80%AFPM.png)
 
 Generate icons in the style of macOS using Apple's SF Symbols. Perfect for your self-service system's catalogue (or at least perfect for mine). Available as both a native macOS GUI app and a command-line tool.
